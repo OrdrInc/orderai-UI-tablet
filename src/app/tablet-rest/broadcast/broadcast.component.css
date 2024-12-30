@@ -1,0 +1,35 @@
+.bR20{
+    border-radius: 20px;
+}
+.ticketborder{
+    border: 3px dotted;
+    width: 50px;
+}
+.f-25{
+   font-size: 2vw!important; 
+}
+.f-20{
+   font-size: 1.5vw!important;
+}
+.f-30{
+    font-size: 2.2vw!important;
+}
+.grey-c{
+   color: grey;;
+}
+.grey-bg{
+    background: darkgrey;
+}
+.red-border {
+    border: 3px solid red;
+}
+.black-border{
+    border: 2px solid black;;
+}
+.black-back{
+    background-color: firebrick;
+    color:white;
+}
+.mT7{
+    margin-top: 7px;
+}

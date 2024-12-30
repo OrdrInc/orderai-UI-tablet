@@ -1,0 +1,103 @@
+<div id="header">
+  <nav class="navbar pT15 pL25 pad-10 black-bg">
+    <span class="white-c f-23 bold lwSpace">{{ resturantName }} 
+     
+    </span>
+    <span class="fRight mR20 bold lwSpace white-c f-23"
+    > <i class="fa fa-refresh mR10 " (click)="refresh()" style="font-size:30px" aria-hidden="true"></i> Cars Checked In
+    <span style="font-size: 25px;" class="badge badge-danger bR20">{{ checkedInCars }}</span></span
+  >
+  </nav>
+</div>
+
+<div *ngIf="service.isCurbSide">
+<table *ngIf="displayData.length!=0" class="table item-center" align="center">
+  <tbody style="color: black" class="">
+    <tr *ngFor="let row of displayData" class="{{row.status?'grey-c grey-bg':''}} {{row.border}}">
+      <th
+        style="width: 10%"
+        class="pB0"
+        style="font-weight: bold; padding-left: 20px"
+      >
+        <span (click)="changeticketId(row)" class="{{ row.OrderInfo.ticketId == '*' ? '' : '' }} f-30">
+          <div class="text-center" *ngIf="row.OrderInfo.ticketId != '*'">{{ row.OrderInfo.ticketId }}</div>
+          <div class="text-center" *ngIf="row.OrderInfo.ticketId == '*'"><i style="color: #3fab59;" class="f-22" aria-hidden="true">#</i></div>
+        </span>
+        <p class="mT7" style="font-size: 2.2vw;">{{ row.DisplayTime | slice :0:5 }}</p>
+      </th>
+
+      <th style="width: 25%" class="pB0">
+        <p class="f-25 bold mB0">{{ getFirstName(row.Name, "firstname") }}</p>
+        <p class="f-20 mB0">{{ getFirstName(row.Name, "lastname") }}</p>
+        <p class="f-25 {{getFirstName(row.Name, 'lastname')==' ' || getFirstName(row.Name, 'lastname')=='' || getFirstName(row.Name, 'lastname')== undefined?'mT10':''}} bold mB0">{{ formatPhone(row.CustomerId) }}</p>
+      </th>
+      <th style="font-size: 2.1vw; width: 45%">
+        <span style="float: left; padding-top: 10px">{{ row.CarInfo }}&nbsp;{{row.OrderInfo.notes}}</span>
+      </th>
+      <th style="width: 10%">
+        <button (click)="respond(row)" *ngIf="!row.status"
+          style="
+           font-size: 1.8vw;
+            font-weight: bold;
+            border-radius: 8px;
+            color: black;
+            background-color: #3fab59;
+          "
+          class="btn black-c btn-warning"
+        >
+         RESPOND
+         
+        </button>
+       
+      </th>
+      <th style="width: 10%">
+        <button (click)="done(row,'done')" *ngIf="!row.status"
+          style="
+           font-size: 1.8vw;
+            font-weight: bold;
+            border-radius: 8px;
+            background-color: #3fab59;
+          "
+          class="btn white-c"
+        >
+         DONE
+         
+        </button>
+        <button *ngIf="row.status"
+        (click)="done(row,'undone')"
+        style="
+         font-size: 1.8vw;
+          font-weight: bold;
+          border-radius: 8px;
+          background-color: grey;
+        "
+        class="btn white-c"
+      >
+       UNDO
+       
+      </button>
+      </th>
+      
+    </tr>
+  </tbody>
+</table>
+<div class="text-center mT50 " *ngIf="displayData.length==0">
+  <img src="assets/img/curb1.gif">
+</div>
+</div>
+<!--<div class="text-center">
+  <button (click)="pushData()" class="btn btn-primary">Push Data</button>
+</div> -->
+<div *ngIf="!service.isCurbSide">
+  <div style="margin-top:150px" class="text-center bold f-25">
+    <p style="font-size: 20px;
+    line-height: 45px;
+    letter-spacing: 0.75px;
+    word-spacing: 0.5px;" [innerHTML]="service.isCurbsideLockedMessage"></p>
+  </div>
+  </div>
+<div style="height: 150px;">&nbsp;</div>
+<app-ticket-id-popup [ticketId]="ticketId" (save)="save($event)"></app-ticket-id-popup>
+<app-respond-popup [timeJson]="timeJson" (respond)="respondSave($event)"></app-respond-popup>
+<app-respond-success></app-respond-success>
+<app-footer></app-footer>

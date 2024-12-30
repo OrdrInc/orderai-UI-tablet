@@ -1,0 +1,30 @@
+<div class="modal fade" data-controls-modal="modalPush" data-backdrop="static" data-keyboard="false" id="modalPush"
+  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info modal-xl"
+    style="max-width: unset;padding-left:30px;padding-right: 30px;" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading mod-head">New Order Alert</p>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
+        <!--<button (click)="pushStaticJson()"></button> -->
+
+        <h3 style="
+           font-family: helvetica;
+           letter-spacing: 1px;
+           word-spacing: 1px;
+          font-size: 33px;
+">You have Got {{orderCount}} new order</h3>
+      </div>
+      <!--Footer-->
+      <div style="height:auto;" (click)="clickss()" class="modal-footer flex-center">
+        <a data-dismiss="modal" class="btn btn-info mB30 mT30 f-22">View Order</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

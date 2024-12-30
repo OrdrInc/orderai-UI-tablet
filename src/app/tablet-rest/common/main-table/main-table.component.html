@@ -1,0 +1,64 @@
+<div *ngIf="!landscape">
+  <table *ngIf="!orderFlow" class="table table-dark item-center" align="center">
+    <thead class="black-bg text-center text-upper">
+      <tr class="tabb">
+        <th scope="col">T#</th>
+        <th scope="col">POSID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">TimeStamp</th>
+        <th scope="col">Total</th>
+        <th scope="col">ETA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="{{order.color}}" (click)="openOrder(order.restaurant.TNumber, order)" *ngFor="let order of data">
+        <th class="text-center f-20 wlSpace" scope="row">{{order.restaurant.tNum}}</th>
+        <th class="text-center f-20 wlSpace" scope="row">{{order.restaurant.ticketId}}</th>
+        <td class="text-center f-20 wlSpace">{{order.customer.name}}</td>
+        <td *ngIf="order.method.type=='pickup'" class="text-center f-20 wlSpace">P/U</td>
+        <td *ngIf="order.method.type=='delivery'" class="text-center f-20 wlSpace">DEL</td>
+        <td class="text-center f-20 wlSpace">{{order.customer.timeStamp}}</td>
+        <td class="text-center f-20 wlSpace">$ {{order.paidDollarValue.paidTotal}}</td>
+        <td *ngIf="!order.orderStatus.isFutureOrder" class="text-center f-20 wlSpace">{{order.orderStatus.ETA}}
+        </td>
+        <td *ngIf="order.orderStatus.isFutureOrder" class="text-center f-20 wlSpace"> F/O </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="noOrders" class="no-order"
+    style="display: flex;justify-content: center;align-items: center; height: 600px;">
+    <h1 class="text-center"> No Orders</h1>
+  </div>
+</div>
+<div *ngIf="landscape">
+  <table class="table table-dark item-center " style="margin-bottom: 25%" align="center">
+    <thead class="black-bg text-upper">
+      <tr class="tabb text-center">
+        <th scope="col">T#</th>
+        <th scope="col">POSID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Time</th>
+        <th scope="col">ETA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="{{order.color}}" *ngFor="let order of data; index as i "
+        (click)="openOrder(order.restaurant.tNum, order)">
+        <th class="text-center f-20 wlSpace" scope="row">{{order.restaurant.tNum}}</th>
+        <th class="text-center f-20 wlSpace" scope="row">{{order.restaurant.ticketId}}</th>
+        <td class="text-center f-20 wlSpace">{{order.customer.name}}</td>
+        <td *ngIf="order.method.type=='pickup'" class="text-center f-20 wlSpace">P/U</td>
+        <td *ngIf="order.method.type=='delivery'" class="text-center f-20 wlSpace">DEL</td>
+        <td class="text-center f-20 wlSpace">{{order.customer.timeStamp}}</td>
+        <td *ngIf="!order.orderStatus.isFutureOrder" class="text-center f-20 wlSpace">{{order.orderStatus.ETA}}
+        </td>
+        <td *ngIf="order.orderStatus.isFutureOrder" class="text-center f-20 wlSpace"> F/O </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 *ngIf="noOrders text-center">
+    No Orders Found
+  </h5>
+</div>

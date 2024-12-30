@@ -1,0 +1,13 @@
+<mat-dialog-content style="max-height:unset!important">
+  <p class="f-22 bold text-center">MESSAGE</p>
+  <hr>
+  <div class="">
+    <p><span class="bold f-22">Subject:</span> <span class="f-22">{{data.subject}}</span></p>
+    <p><span class="bold f-22">Message:</span>  <span class="f-22" [innerHTML]="data.message"></span></p>
+  </div>
+</mat-dialog-content>
+<div class="text-center">
+  <mat-dialog-actions class = "close-btn" style="display: unset;">
+    <button mat-raised-button color="primary" class='bold f-16' (click) = "close()"> Close </button>
+  </mat-dialog-actions>
+  </div>

@@ -1,0 +1,61 @@
+<div class="modal fade " style="top:0px!important;overflow: auto!important;" id="extendeta" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading mod-head">Extend ETA</p>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <h4>Extend ETA: Pickup </h4>
+        <button long-press [timeout]="250" (onLongPress)="extendETA('default','pickup')"
+          (click)="extendETA('default','pickup')"
+          class="btn {{extendPickupTemp=='default'?'green-button-1':'empty-button'}}">
+          Default
+        </button>
+        <br>
+        <button long-press [timeout]="250" (onLongPress)="extendETA('10','pickup')" (click)="extendETA('10','pickup')"
+          class="btn {{extendPickupTemp=='10'?'green-button-1':'empty-button'}}">
+          +10
+        </button>
+        <button long-press [timeout]="250" (onLongPress)="extendETA('20','pickup')" (click)="extendETA('20','pickup')"
+          class="btn {{extendPickupTemp=='20'?'green-button-1':'empty-button'}}">
+          +20
+        </button>
+        <button long-press [timeout]="250" (onLongPress)="extendETA('30','pickup')" (click)="extendETA('30','pickup')"
+          class="btn {{extendPickupTemp=='30'?'green-button-1':'empty-button'}}">
+          +30
+        </button>
+        <br><br>
+        <h4>Extend ETA: Delivery </h4>
+        <button long-press [timeout]="250" (onLongPress)="extendETA('default','delivery')"
+          (click)="extendETA('default','delivery')"
+          class="btn {{extendDeliveryTemp=='default'?'green-button-1':'empty-button'}}">
+          Default
+        </button>
+        <br>
+        <button long-press [timeout]="250" (onLongPress)="extendETA('10','delivery')"
+          (click)="extendETA('10','delivery')" class="btn {{extendDeliveryTemp=='10'?'green-button-1':'empty-button'}}">
+          +10
+        </button>
+        <button long-press [timeout]="250" (onLongPress)="extendETA('20','delivery')"
+          (click)="extendETA('20','delivery')" class="btn {{extendDeliveryTemp=='20'?'green-button-1':'empty-button'}}">
+          +20
+        </button>
+        <button long-press [timeout]="250" (onLongPress)="extendETA('30','delivery')"
+          (click)="extendETA('30','delivery')" class="btn {{extendDeliveryTemp=='30'?'green-button-1':'empty-button'}}">
+          +30
+        </button>
+
+      </div>
+      <!--Footer-->
+      <div style="height:auto" class="modal-footer flex-center">
+        <a (click)="resetETA()" class="btn btn-info f-22">Save</a>
+        <a data-dismiss="modal" class="btn btn-info f-22">close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.border-button-box{
+    border-top: 1px solid black;
+    height: 60px;
+}
+.bR8{
+    border-radius: 8px;
+}
+.f-16{
+    font-size: 16px;
+}
+.grey-c{
+    color: grey;
+}
+.green-bg{
+    background-color: #3fab59;
+}
+.yellow-bg{
+    background-color: goldenrod!important;
+}
+.maroon-bg{
+   background-color:firebrick!important;
+}
+.badge-new{
+    background: #ff3547!important;
+    font-size: 25px!important;
+    color: white!important;
+    border-radius: 20px;
+}
+.bR2{
+    border-right:2px solid white;
+}
+.caret-disp{
+    position: relative;
+    top: -19px;
+    left: 6%;
+    font-size: 35px!important;
+    color: #ff3547;
+}

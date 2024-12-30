@@ -1,0 +1,209 @@
+<div *ngIf="!landscape">
+  <div *ngIf="orderDetail.orderStatus.refundStatus==false">
+    <div *ngIf="orderDetail.orderStatus.isFutureOrder" class=" row col-sm-12 pR0">
+      <div class="col-sm-8 pT30 card pB20 dis-unset margin-auto">
+        <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;text-transform: uppercase">
+          Future Order (F/O)
+          <br><br>
+          <span style="font-size: 40px!important"> {{orderDetail.orderStatus.futureOrderTime}}</span>
+        </h5>
+      </div>
+    </div>
+
+
+
+
+    <div *ngIf="!orderDetail.orderStatus.isFutureOrder" class=" row col-sm-12 pR0">
+      <div *ngIf="orderDetail.method.type=='pickup' || orderDetail.method.type=='Pickup'"
+        class="col-sm-10 margin-auto text-center pT30 card pB20 dis-unset {{orderDetail.orderStatus.ETA!='TBD'?'':'margin-auto'}}">
+        <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;">
+          ETA (minute)
+        </h5>
+
+        <button style="margin-left:20px" long-press [timeout]="250" (onLongPress)="setETA(eta.pickup.timeslot1)"
+          (click)="setETA(eta.pickup.timeslot1)"
+          class="btn {{tempETA==eta.pickup.timeslot1?'green-button':'empty-button'}}">{{eta.pickup.timeslot1}}
+        </button>
+        <button long-press [timeout]="250" (onLongPress)="setETA(eta.pickup.timeslot2)"
+          (click)="setETA(eta.pickup.timeslot2)"
+          class="btn {{tempETA==eta.pickup.timeslot2 ?'green-button':'empty-button'}}">{{eta.pickup.timeslot2}}
+        </button>
+        <button long-press [timeout]="250" (onLongPress)="setETA(eta.pickup.timeslot3)"
+          (click)="setETA(eta.pickup.timeslot3)"
+          class="btn {{tempETA==eta.pickup.timeslot3 ?'green-button':'empty-button'}}">{{eta.pickup.timeslot3}}
+        </button>
+
+
+
+        <div class="wrapper" style="display:flex;justify-content: center;">
+          <div><button (click)="setcustomETA()" class="btn {{customnFlag?'green-button':'empty-button'}}">Custom
+
+            </button></div>
+          <div></div>
+          <div *ngIf="customnFlag" class="form-group w40" style="padding-top:10px">
+            <select id="Id" #Id="ngModel" class="form-control w80 margin-auto" [(ngModel)]="customTime" name="Id"
+              (change)="confirm(customTime);">
+              <!-- <option disabled [value]="" selected>Select one category </option>  -->
+              <option [ngValue]="time" *ngFor="let time of timeList.time">
+                {{time}}
+              </option>
+            </select>
+            <!--  <input [disabled]="!customnFlag" (blur)="confirm(customTime)" (focus)="confirm(customTime)" type="number"
+              [(ngModel)]="customTime" class="form-control-lg" id="customtime" placeholder="Enter a Custom Time">
+          </div> -->
+          </div>
+
+
+        </div>
+      </div>
+      <div *ngIf="orderDetail.method.type=='Delivery' || orderDetail.method.type=='delivery'"
+        class="col-sm-10 margin-auto text-center pT30 card pB20 dis-unset {{orderDetail.orderStatus.ETA!='TBD'?'':'margin-auto'}}">
+        <br><br>
+        <h5 class="f-22 bold text-center" style="font-size: 30px !important;">
+          ETA (minute)
+        </h5>
+
+        <button style="margin-left:20px" long-press [timeout]="250" (onLongPress)="setETA(eta.delivery.timeslot1)"
+          (click)=" setETA(eta.delivery.timeslot1)"
+          class="btn {{tempETA==eta.delivery.timeslot1 ?'green-button':'empty-button'}}">
+          {{eta.delivery.timeslot1}}
+        </button>
+        <button long-press [timeout]="250" (onLongPress)="setETA(eta.delivery.timeslot2)"
+          (click)="setETA(eta.delivery.timeslot2)"
+          class="btn {{tempETA==eta.delivery.timeslot2 ?'green-button':'empty-button'}}">{{eta.delivery.timeslot2}}
+        </button>
+        <button long-press [timeout]="250" (onLongPress)="setETA('eta.delivery.timeslot3')"
+          (click)="setETA(eta.delivery.timeslot3)"
+          class="btn {{tempETA==eta.delivery.timeslot3 ?'green-button':'empty-button'}}">{{eta.delivery.timeslot3}}
+        </button>
+
+        <div class="wrapper" style="display:flex;justify-content: center;">
+          <div><button (click)="setcustomETA()" class="btn {{customnFlag?'green-button':'empty-button'}}">Custom
+
+            </button></div>
+          <div></div>
+          <div *ngIf="customnFlag" class="form-group" style="padding-top:10px">
+            <select id="Id" #Id="ngModel" class="form-control w80 margin-auto" [(ngModel)]="customTime" name="Id"
+              (change)="confirm(customTime);">
+              <!-- <option disabled [value]="" selected>Select one category </option>  -->
+              <option [ngValue]="time" *ngFor="let time of timeList.time">
+                {{time}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+      <!--<div *ngIf="orderDetail.orderStatus.ETA!='TBD'" class="col-sm-4 card text-center">
+        <h5 class="mTp-15">
+          <h4> <strong> ETA </strong></h4>
+          <h4> <strong> SELECTED </strong></h4>
+          <hr class="hr-cust">
+          <h2>{{orderDetail.orderStatus.ETA}} Minutes</h2>
+        </h5>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+<div *ngIf="landscape">
+  <div *ngIf="orderDetail.orderStatus.refundStatus==false">
+    <div *ngIf="orderDetail.orderStatus.isFutureOrder" class="  row col-sm-12 ">
+      <div class="col-sm-12 card pB20 dis-unset">
+        <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;text-transform: uppercase">
+          Future Order (F/O)
+          <br>
+          {{orderDetail.orderStatus.futureOrderTime}}
+        </h5>
+      </div>
+    </div>
+
+    <div *ngIf="!orderDetail.orderStatus.isFutureOrder" class=" row col-sm-12">
+      <div *ngIf="orderDetail.method.type=='pickup' || orderDetail.method.type=='Pickup'"
+        class="col-sm-12 card pB20 dis-unset">
+        <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;">
+          ETA (minute)
+        </h5>
+
+
+        <div class="text-center">
+          <button style="margin-left:20px; font-size:16px!important" long-press [timeout]="250"
+            (onLongPress)="setETA(eta.pickup.timeslot1)" (click)="setETA(eta.pickup.timeslot1)"
+            class="pL20 pR20 btn {{tempETA==eta.pickup.timeslot1?'green-button':'empty-button'}}">{{eta.pickup.timeslot1}}
+          </button>
+          <button style=" font-size:16px!important" long-press [timeout]="250"
+            (onLongPress)="setETA(eta.pickup.timeslot2)" (click)="setETA(eta.pickup.timeslot2)"
+            class="pL20 pR20 btn {{tempETA==eta.pickup.timeslot2 ?'green-button':'empty-button'}}">{{eta.pickup.timeslot2}}
+          </button>
+          <button style="font-size:16px!important" long-press [timeout]="250"
+            (onLongPress)="setETA(eta.pickup.timeslot3)" (click)="setETA(eta.pickup.timeslot3)"
+            class="pL20 pR20 btn {{tempETA==eta.pickup.timeslot3 ?'green-button':'empty-button'}}">{{eta.pickup.timeslot3}}
+          </button>
+        </div>
+        <div class="wrapper" style="display:flex;justify-content: center;">
+          <div><button (click)="setcustomETA()" class="btn {{customnFlag?'green-button':'empty-button'}}">Custom
+
+            </button></div>
+          <div></div>
+          <div *ngIf="customnFlag" class="form-group" style="padding-top:10px">
+            <select id="Id" #Id="ngModel" class="form-control  margin-auto" [(ngModel)]="customTime" name="Id"
+              (change)="confirm(customTime);">
+              <!-- <option disabled [value]="" selected>Select one category </option>  -->
+              <option [ngValue]="time" *ngFor="let time of timeList.time">
+                {{time}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+
+      </div>
+      <div *ngIf="orderDetail.method.type=='Delivery' || orderDetail.method.type=='delivery'"
+        class="col-sm-12 card pB20 dis-unset">
+        <br><br>
+        <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;">
+          ETA (minute)
+        </h5>
+        <div class="text-center">
+          <button style="margin-left:20px; font-size:16px!important" long-press [timeout]="250"
+            (onLongPress)="setETA(eta.delivery.timeslot1)" (click)=" setETA(eta.delivery.timeslot1)"
+            class=" pL20 pR20 btn {{tempETA==eta.delivery.timeslot1 ?'green-button':'empty-button'}}">
+            {{eta.delivery.timeslot1}}
+          </button>
+          <button style=" font-size:16px!important" long-press [timeout]="250"
+            (onLongPress)="setETA(eta.delivery.timeslot2)" (click)="setETA(eta.delivery.timeslot2)"
+            class="pL20 pR20 btn {{tempETA==eta.delivery.timeslot2 ?'green-button':'empty-button'}}">{{eta.delivery.timeslot2}}
+          </button>
+          <button style=" font-size:16px!important" long-press [timeout]="250"
+            (onLongPress)="setETA('eta.delivery.timeslot3')" (click)="setETA(eta.delivery.timeslot3)"
+            class="pL20 pR20 btn {{tempETA==eta.delivery.timeslot3 ?'green-button':'empty-button'}}">{{eta.delivery.timeslot3}}
+          </button>
+        </div>
+        <div class="wrapper" style="display:flex;justify-content: center;">
+          <div><button (click)="setcustomETA()" class="btn {{customnFlag?'green-button':'empty-button'}}">Custom
+
+            </button>
+          </div>
+          <div></div>
+          <div *ngIf="customnFlag" class="form-group" style="padding-top:10px">
+            <select id="Id" #Id="ngModel" class="form-control  margin-auto" [(ngModel)]="customTime" name="Id"
+              (change)="confirm(customTime);">
+              <!-- <option disabled [value]="" selected>Select one category </option>  -->
+              <option [ngValue]="time" *ngFor="let time of timeList.time">
+                {{time}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+      <!-- <div *ngIf="orderDetail.orderStatus.ETA!='TBD'" class="col-sm-12 card text-center">
+        <h5 class="">
+          <h4 class="pT30"> <strong> SELECTED ETA </strong></h4>
+          <hr class="">
+          <h2>{{orderDetail.orderStatus.ETA}} Minutes</h2>
+        </h5>
+      </div> -->
+    </div>
+  </div>
+</div>

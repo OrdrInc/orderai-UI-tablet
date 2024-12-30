@@ -1,0 +1,85 @@
+<div id="header">
+  <nav class="navbar pT15 pL25 pad-10 black-bg">
+    <span class="white-c f-23 bold lwSpace">{{ resturantName }} 
+    </span>
+    <span class="fRight mR20 bold lwSpace white-c f-23"
+    > <i class="fa fa-refresh mR10 " (click)="refresh()" style="font-size:30px" aria-hidden="true"></i> Today's Broadcast
+    <span style="font-size: 25px;" class="badge badge-danger bR20">{{ broadcastcount }}</span></span
+  >
+  </nav>
+</div>
+<div *ngIf="service.isBroadcast">
+<div class="flex-container text-center" *ngIf="loading">
+  <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+</div>
+<div *ngIf="!loading" >
+  <div class="text-center mT50 " *ngIf="displayData.length==0">
+    <img width="30%" src="https://cdn.dribbble.com/users/870130/screenshots/2629623/bocina.gif">
+  </div>
+  <table *ngIf="displayData.length!=0" class="table item-center" align="center">
+    <tbody style="color: black" class="">
+      <tr  style="border:2px solid black;" *ngFor="let row of displayData" class="{{row.bStatus?'grey-c grey-bg':''}} {{row.border}}">
+        <th (click)="details(row)"
+          
+          class="pB0"
+          style="font-weight: bold; padding-left: 20px;width:20%"
+        >
+          <span  class="f-30">
+            <div class="f-30 pT20" >{{ row.storeDate}}</div>
+      
+          </span>
+         
+        </th>
+  
+        <th (click)="details(row)" style="width: 15%" class="pB0">
+          <p class="f-30 mT20 bold mB0">{{row.displayTime}}</p>
+        </th>
+        <th (click)="details(row)" style=" width: 15%">
+          <span class="f-25 bold pT20" style="float: left; padding-top: 10px">{{ row.createdBy }}</span>
+        </th>
+        <th (click)="details(row)" class="" style="font-size: 1.6vw; width: 40%;text-align: left;">
+          <p class="mT20 f-30 ">{{ row.subject}}</p>
+        </th>
+        <th style="width: 10%">
+          <button (click)="done(row)" *ngIf="!row.bStatus"
+            style="
+             font-size: 20px;
+              font-weight: bold;
+              border-radius: 8px;
+              background-color: #3fab59;
+            "
+            class="btn white-c"
+          >
+           DONE
+           
+          </button>
+          <button *ngIf="row.bStatus"
+          (click)="done(row)"
+          style="
+           font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            background-color: grey;
+          "
+          class="btn white-c"
+        >
+         UNDO
+         
+        </button>
+        </th>
+      
+      </tr>
+    </tbody>
+  </table>
+  <div style="height: 150px;">&nbsp;</div>
+</div>
+</div>
+<div *ngIf="!service.isBroadcast">
+<div style="margin-top:150px" class="text-center bold f-25">
+  <p  style="font-size: 20px;
+  line-height: 45px;
+  letter-spacing: 0.75px;
+  word-spacing: 0.5px;" [innerHTML]="service.isBroadcastLockedMessage"></p>
+</div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,286 @@
+<div class="flex-container">
+  <div class="qty-box f-18">QTY</div>
+  <div class="qty-box f-18 text-center flex-grow-6"> ITEMS
+  </div>
+  <div class="qty-box f-18">PRICE</div>
+</div>
+<hr>
+<div *ngFor="let item of items; index as i">
+  <div class="flex-container">
+    <div class="qty-box pRp">{{qty[i]}}</div>
+    <div class="title-box text-center flex-grow-6">
+      {{sizes[i].replace('-1', '')}}
+      {{cursts[i].replace('-1', '')}}
+      {{itemNames[i]}}
+    </div>
+    <div class="price-box">{{amounts[i]}}</div>
+  </div>
+  <div class="flex-container" [hidden]="sauce[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>Sauce:</b>
+      {{sauce[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="toppings[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4">
+      <b>Toppings:</b>
+      {{toppings[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="firstHalf[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>First
+        Half:</b>
+      {{firstHalf[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="secondHalf[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>Second
+        Half:</b>
+      {{secondHalf[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="seasoning[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>
+        Seasoning:</b>
+      {{seasoning[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="bread[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"><b> Bread:</b>
+      {{bread[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="drizzle[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4">
+      <b>Drizzle:</b>
+      {{drizzle[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="cheese[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4">
+      <b>Cheese:</b>
+      {{cheese[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="crustTopper[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>Crust
+        Topper:</b>
+      {{crustTopper[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="wingType[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"><b>Wing
+        Type:</b>
+      {{wingType[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="sides[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>Sides:</b>
+      {{sides[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="bake[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>Bake:</b>
+      {{bake[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="cut[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b> Cut:</b>
+      {{cut[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="dipping[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4">
+      <b>Dipping:</b>
+      {{dipping[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="sauceBase[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>Sauce
+        Base:</b>
+      {{sauceBase[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="seasoningPackets[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4"> <b>Seasoning
+        Packets:</b>
+      {{seasoningPackets[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <div class="flex-container" [hidden]="dressing[i] === '-1'">
+    <div class="qty-box"></div>
+    <div class="half-box flex-grow-4">
+      <b>Dressing:</b>
+      {{dressing[i]}}
+    </div>
+    <div class="price-box"> </div>
+  </div>
+  <hr class="m-1">
+</div>
+<div>
+  <div class="price-list">
+
+    <div class="flex-container-price" [hidden]="orderDetail.paidDollarValue.paidSavings === '0.00'">
+      <div> You Saved (Promo:
+        {{orderDetail.paidDollarValue.paidCouponName}})
+      </div>
+      <div>-${{orderDetail.paidDollarValue.paidSavings}}
+      </div>
+    </div>
+    <div class="flex-container-price" [hidden]="orderDetail.paidDollarValue.paidTax=== '0.00'">
+      <div>Tax:</div>
+      <div>${{orderDetail.paidDollarValue.paidTax}}</div>
+    </div>
+    <div class="flex-container-price" [hidden]="orderDetail.paidDollarValue === '0'">
+      <div>Tip:</div>
+      <div>${{orderDetail.paidDollarValue.paidTip}}</div>
+    </div>
+  </div>
+  <table class="table" [hidden]="orderDetail.paidDollarValue.paidTotal === '0.0'">
+    <thead class="table-dark">
+      <tr class="flex-container-table">
+        <th scope="col" class="f-xl">
+          TOTAL
+        </th>
+        <th scope="col" class="f-xl">
+          ${{(orderDetail.paidDollarValue.paidTotal)}}
+        </th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<style>
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .half-box {
+    font-size: 20px;
+    color: firebrick;
+    padding-left: 7%;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+
+  }
+
+  .qty-box {
+    font-size: 22px;
+    font-weight: bold;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: .9rem;
+  }
+
+  .title-box {
+    font-size: 22px;
+    padding-top: 1rem;
+    color: black;
+    padding-bottom: .3rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    text-align: left !important;
+  }
+
+  .price-box {
+    font-size: 16px;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .modi-box {
+    font-size: 15px;
+    color: rgb(70, 70, 219);
+    padding: 5px;
+  }
+
+  .price-list-val {
+    padding: 1rem;
+  }
+
+  .price-list {
+    padding: 1rem;
+  }
+
+  .flex-container-price {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .total-val {
+    font-weight: bold;
+    padding-top: 1.5rem;
+    padding: 1rem;
+  }
+
+  hr {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 0;
+    border-top: 3px solid #eee;
+  }
+
+  .flex-container-table {
+    display: flex;
+    justify-content: space-between;
+    background: grey;
+  }
+
+  table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid grey;
+  }
+
+  .keyword-box {
+    font-family: serif;
+    flex-grow: 4;
+    font-size: large;
+    color: blue;
+    font-size: 19px;
+    padding: 10px;
+    font-size: large;
+    font-weight: bold;
+  }
+
+  .nav-items {
+    font-size: 20px;
+    font-family: helvetica;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+  }
+</style>

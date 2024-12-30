@@ -1,0 +1,141 @@
+<div id="header">
+  <nav class="navbar pT15 pL25 pad-10 black-bg">
+    <span class="white-c f-23 bold lwSpace">{{ resturantName }}
+    </span>
+    <span class="fRight mR20 bold lwSpace white-c f-23"> <i class="fa fa-refresh mR10 " (click)="refresh()"
+        style="font-size:30px" aria-hidden="true"></i>
+      <span (click)="feedbackHistory()" class="mL20 btn btn-warning review">Past Reviews </span>
+      Today's Review
+
+      <span style="font-size: 25px;" class="badge badge-danger bR20">{{ feedbackcount }}</span>
+
+    </span>
+  </nav>
+</div>
+<div *ngIf="service.isFeedback">
+  <div class="flex-container text-center" *ngIf="loading">
+    <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+  </div>
+  <div *ngIf="!loading">
+    <div class="text-center mT50 " *ngIf="displayData.length==0">
+      <img width="30%" src="https://i.pinimg.com/originals/28/25/64/2825644cf426d71e7618523e5594ec68.gif">
+    </div>
+    <table *ngIf="displayData.length!=0" class="table item-center" align="center">
+      <tbody style="color: black" class="">
+        <tr style="border:2px solid black;" *ngFor="let row of displayData"
+          class="{{row.fStatus?'grey-c grey-bg':''}} {{row.border}}">
+          <th style="width: 10%" class="pB0" style="font-weight: bold; padding-left: 20px">
+            <span (click)="changeticketId(row)" class="f-30">
+              <div class="f-20">{{ row.storeDate}}</div>
+
+            </span>
+            <p class="mT7" style="font-size: 2.2vw;">{{row.displayTime}}</p>
+          </th>
+
+          <th style="width: 25%" class="pB0">
+            <p class="f-25 bold mB0">{{row.name }}</p>
+
+            <p class="f-25 bold mB0">{{ formatPhone(row.custId) }}</p>
+          </th>
+          <th style="font-size: 1.6vw; width: 35%">
+            <span *ngIf="row.isDefaultFeedback" style="float: left; padding-top: 10px">{{ row.feedbackTxt }}</span>
+            <span *ngIf="!row.isDefaultFeedback" style="float: left; padding-top: 10px">{{row.customQuestionFeedback[0].question}}
+            <br>
+            {{row.customQuestionFeedback[0].value}}
+            <br>
+            <a style="text-decoration:underline" (click)="openFeedbackDetail(row)" class="f-15 bold"><i>View More</i></a>
+            </span>
+          </th>
+          <th class="text-center" style="font-size: 1.6vw; width: 10%">
+            <p class="mT10 f-40 bold">{{ row.starRating }} <i class="fa fa-star " style="color: goldenrod;"
+                aria-hidden="true"></i></p>
+          </th>
+          <th style="width: 10%">
+            <button (click)="done(row)" *ngIf="!row.fStatus" style="
+             font-size: 1.8vw;
+              font-weight: bold;
+              border-radius: 8px;
+              background-color: #3fab59;
+            " class="btn white-c">
+              DONE
+
+            </button>
+            <button *ngIf="row.fStatus" (click)="done(row)" style="
+           font-size: 1.8vw;
+            font-weight: bold;
+            border-radius: 8px;
+            background-color: grey;
+          " class="btn white-c">
+              UNDO
+
+            </button>
+          </th>
+
+        </tr>
+      </tbody>
+    </table>
+    <div style="height: 150px;">&nbsp;</div>
+  </div>
+</div>
+<div *ngIf="!service.isFeedback">
+  <div style="margin-top:150px" class="text-center bold f-25">
+    <p style="font-size: 20px;
+    line-height: 45px;
+    letter-spacing: 0.75px;
+    word-spacing: 0.5px;" [innerHTML]="service.isFeedbackLockedMessage"></p>
+  </div>
+</div>
+<app-footer></app-footer>
+
+<div class="modal fade" id="feedbackpop" style="top:0%!important" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-notify modal-success" role="document">
+
+    <div class="modal-content text-center">
+
+      <div style="background-color: black!important;" class="modal-header d-flex justify-content-center">
+        <p style="font-size: 25px!important;" class="heading mod-head">REVIEW RESPONSE</p>
+      </div>
+      <div style="height:auto" class="text-center pT50">
+        <a (click)="selectedResponse='btn1'"
+          style="width: 90%; border-radius: 8px;color: black; letter-spacing:0.75px; word-spacing: 1px;"
+          class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn1'?'btn-warning black-c':''}} {{(selectedResponse!='btn1' && selectedResponse!='')?'btn-grey grey-c':''}}  f-18 mR30 mL30 mB40 ">We appreciate your feedback and suggestions. Thanks!</a><br>
+        <a (click)="selectedResponse='btn2'"
+          style="width: 90%; border-radius: 8px;color:black;letter-spacing:0.75px; word-spacing: 1px;"
+          class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn2'?'btn-warning black-c':''}} {{(selectedResponse!='btn2' && selectedResponse!='')?'btn-grey grey-c':''}}  f-18 mR30 mL30 mB40 m20 ">
+          We apologies for the inconvenience caused. We will look into this immediately. Thanks!</a>
+
+      </div>
+      <div style="height:auto" class="modal-footer flex-center pT0">
+
+        <a (click)="donecall()" style="border-radius:8px" class="btn black-bg white-c  bold f-18 mR20">Send</a>
+        <a data-dismiss="modal" style="color:rgb(2, 1, 1)!important;border: 1px solid black;border-radius:8px"
+          class="btn  white-bg black-c f-18 bold mL20">Close</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="feedbackSucess" style="top:0%!important" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center pT0 pB0">
+        <p class="heading mod-head">Response</p>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <i class="fas fa-check fa-4x green-text animated rotateIn"></i>
+        <h4>Response sent.</h4>
+      </div>
+      <!--Footer-->
+      <div style="height:auto" class="modal-footer flex-center">
+        <a data-dismiss="modal" style="background-color: #3fab59;border-radius: 8px;" class="btn  bold">Close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

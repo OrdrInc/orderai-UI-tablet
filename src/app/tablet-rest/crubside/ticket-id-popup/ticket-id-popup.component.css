@@ -1,0 +1,7 @@
+.disabled{
+    pointer-events: none;
+    background-color: grey!important;
+}
+.green-btn{
+    background-color: #3fab59!important;
+}

@@ -1,0 +1,160 @@
+<div *ngIf="buttonsFlag" id="footer">
+  <footer
+    class="footer w100 {{
+      landscape ? 'landscape-footer' : 'portrait-footer'
+    }} "
+    style="bottom: 50px !important"
+  >
+    <div class="black-bg border-button-box">
+      <div #boxhight class="col-sm-12 text-center mT10">
+        <span
+          (click)="goTo('broadcast')"
+          class="{{
+            curPage == 'broadcast' ? 'f-24 white-c' : 'f-22 grey-c'
+          }}   bold col-sm-2 bR2 "
+        >
+          <i
+            *ngIf="curPage == 'broadcast'"
+            class="fa fa-caret-up f-22 caret-disp"
+            aria-hidden="true"
+          ></i>
+          <span *ngIf="curPage != 'broadcast'">
+            &nbsp;&nbsp;</span
+          >
+          <i *ngIf="!service.isBroadcast" class="fa fa-lock f-22" aria-hidden="true"></i> 
+          BROADCAST&nbsp;<span
+            *ngIf="service.broadcastBadgeCount > 0"
+            class="badge badge-new badge-light br8 f-16"
+            >{{ service.broadcastBadgeCount }}</span
+          >
+        </span>
+        <span
+          (click)="goTo('curbside')"
+          class="{{
+            curPage == 'curbside' ? 'f-24 white-c' : 'f-22 grey-c'
+          }}   bold col-sm-2 bR2 "
+        >
+          <i
+            *ngIf="curPage == 'curbside'"
+            class="fa fa-caret-up f-22 caret-disp"
+            aria-hidden="true"
+          ></i>
+          <span *ngIf="curPage != 'curbside'">&nbsp;&nbsp;</span>
+          <i *ngIf="!service.isCurbSide" class="fa fa-lock f-22" aria-hidden="true"></i> 
+          CURBSIDE&nbsp;<span
+            *ngIf="service.curbsideBadgeCount > 0"
+            class="badge badge-new badge-light br8 f-16"
+            >{{ service.curbsideBadgeCount }}</span
+          >
+        </span>
+        <span
+          (click)="goTo('feedback')"
+          class="{{
+            curPage == 'fb' ? 'f-24 white-c' : 'f-22 grey-c'
+          }}   bold col-sm-2 bR2 "
+        >
+          <i
+            *ngIf="curPage == 'fb'"
+            class="fa fa-caret-up f-22 caret-disp" style="left:5%!important"
+            aria-hidden="true"
+          ></i>
+          <span *ngIf="curPage != 'fb'">&nbsp;&nbsp;</span> 
+          <i *ngIf="!service.isFeedback" class="fa fa-lock f-22" aria-hidden="true"></i>
+          REVIEW&nbsp;<span
+            *ngIf="service.feedbackBadgeCount > 0"
+            class="badge badge-new badge-light br8 f-16"
+            >{{ service.feedbackBadgeCount }}</span
+          >
+        </span>
+        <span
+          (click)="goTo('manage')"
+          class="{{
+            curPage == 'manage' ? 'f-24 white-c' : 'f-22 grey-c'
+          }}   bold col-sm-2 bR2 "
+        >
+          <i
+            *ngIf="curPage == 'manage'"
+            class="fa fa-caret-up f-22 caret-disp"
+            style="left: 8% !important"
+            aria-hidden="true"
+          ></i>
+          <span *ngIf="curPage != 'manage'">&nbsp;&nbsp;</span> STORE MANAGE
+          &nbsp;
+        </span>
+        <span
+          (click)="goTo('rest')"
+          class="{{
+            curPage == 'rest' ? 'f-24 white-c' : 'f-22 grey-c'
+          }}   bold col-sm-2  "
+        >
+          <i
+            *ngIf="curPage == 'rest'"
+            class="fa fa-caret-up f-22 caret-disp"
+            aria-hidden="true"
+          ></i>
+          <span *ngIf="curPage != 'rest'">&nbsp;&nbsp;</span> TEXT
+          POS&nbsp;<span
+            *ngIf="service.textPOSBadgeCount > 0"
+            class="badge badge-new badge-light br8 f-16"
+            >{{ service.textPOSBadgeCount }}</span
+          >
+        </span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div *ngIf="!landscape" id="footer">
+  <footer
+    *ngIf="!orderFlow"
+    class="footer w100 {{ landscape ? 'landscape-footer' : 'portrait-footer' }}"
+  >
+    <div class="black-bg pad-10">
+      <div class="container">
+        <div class="row">
+          <div class="col footer-txt">
+            <div>
+              <div class="footer-txt">© {{ year }} <b>Ordr Inc.</b></div>
+            </div>
+          </div>
+          <div class="col">
+            <div style="float: right">
+              <div class="footer-txt">Support: <b>(415) 903-4020</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+<div *ngIf="landscape" style="z-index: 1; position: fixed" id="footer">
+  <footer
+    class="footer w100 {{ landscape ? 'landscape-footer' : 'portrait-footer' }}"
+  >
+    <div class="black-bg pad-10">
+      <div class="container">
+        <div class="row">
+          <div class="col footer-txt">
+            <div>
+              <div class="footer-txt">© {{ year }} <b>Ordr Inc.</b></div>
+            </div>
+          </div>
+          <div class="col">
+            <div style="float: right">
+              <div class="footer-txt">Support: <b>(415) 903-4020</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+<style>
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    /* Height of the footer */
+  }
+</style>

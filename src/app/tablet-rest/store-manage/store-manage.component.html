@@ -1,0 +1,313 @@
+<div id="header">
+  <nav class="navbar pT15 pL25 pad-10 black-bg">
+    <span class="white-c f-23 bold lwSpace">{{ resturantName }} 
+    </span>
+  </nav>
+</div>
+<div class="flex-container text-center" *ngIf="loading">
+  <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+</div>
+<div *ngIf="!loading" class="text-center mB20">
+  <div *ngIf="!pinVerified">
+    <div class="modal-body col-sm-5 mT50" style="margin:auto">
+      <div *ngIf="pinAttempt >0 && pinAttempt <= 3" class="alert alert-danger" role="alert">
+          Wrong Pin. Attempts {{this.pinAttempt}} of 3.
+      </div>
+      <div *ngIf="pinAttempt >3" class="alert alert-danger" role="alert">
+          You have entered Wrong Pin 3 times. Call (415) 903-4020 for support.
+      </div>
+      <div *ngIf="storePinlengthMessage" class="alert alert-danger" role="alert">
+          Please enter a valid 4 Digit PIN
+      </div>
+      <div>
+
+          <strong>
+              <h5 class="bold f-23">Enter Your Store PIN (4-Digit) to Access Store:</h5>
+          </strong>
+          <div class="col-auto w70 pL0 margin-auto pT10">
+
+              <div class="input-group mb-2">
+
+                  <input style="height:45px" appAutoFocus maxlength="4" onKeyPress="if(this.value.length==4) return false;" type="tel" [(ngModel)]="storePIN"
+                      class="form-control" id="storepinn" placeholder="PIN">
+
+              </div>
+          </div>
+          <div class="">
+              <a  (click)="extendPin()"
+                  class="btn   mT30 f-20 bold bR8 pad-10 {{storePinString(storePIN).length==4?' btn-success':'disabled'}}">Submit</a>
+             
+          </div>
+      </div>
+  </div>
+  </div>
+  <div *ngIf="pinVerified && servicesFlag">
+    <!--<div class="box  {{storedata.actionBtnArr[0].item=='Resume Store' ? 'bg-success':'maroon-bg'}} " (click)="textOrders()">
+      <p class="mT32 f-21 ls-1">
+        <span *ngIf="storedata.actionBtnArr[0].item=='Resume Store'">Resume Text Orders</span>
+        <span *ngIf="storedata.actionBtnArr[0].item=='Pause Store'">Pause Text Orders</span>
+      </p>
+    </div> -->
+
+   
+    <div class=" mT32 mL30">
+      <div class="row">
+        <div
+          class="pL5 col-sm-5 mB10"
+          *ngFor="let item of manageStoreServicesData.storeStatus"
+        >
+          <div *ngIf="!showLock(item)" class="new-box">
+            <div class="f-21 ls-1">
+              <div class="f-22 ls-0 border-gr relative">
+                <div class="bold mB5">{{ item.serviceName }}</div>
+              </div>
+              <div>
+                <div class="content">
+                  <div>
+                    <div class="pT10 pB0" *ngFor="let data of item.data">
+                      
+                      <ng-container   class="w50 disp-inline">
+                        <div class="w100" *ngIf="data.label == 'isActive'">
+                          <p class="f-16 ls-0 mB5" *ngIf="!data.response">
+                            <span class="bold">
+                              {{ item.serviceName }}
+                            </span>
+                            service is currently paused. Click to resume.
+                          </p>
+                          <p class="f-16 ls-0 mB5" *ngIf="data.response">
+                            <span class="bold">
+                              {{ item.serviceName }}
+                            </span>
+                            service is currently active. Click to pause.
+                          </p>
+                          <div
+                            (click)="action(item.serviceName, data.response)"
+                            class="btn-clrs bg-success {{
+                              pauseUnpauseTest(item) ? 'disabled' : ''
+                            }}"
+                            *ngIf="!data.response"
+                          >
+                            {{ item.serviceName }} - Resume
+                          </div>
+                          <div
+                            (click)="action(item.serviceName, data.response)"
+                            class="btn-clrs maroon-bg {{
+                              pauseUnpauseTest(item) ? 'disabled' : ''
+                            }}"
+                            *ngIf="data.response"
+                          >
+                            {{ item.serviceName }} - Pause
+                          </div>
+                        </div>
+                        <div
+                          class="w100"
+                          *ngIf="data.label == 'isDeliveryPaused'"
+                        >
+                          <p
+                            *ngIf="deliveryTest(item) != ''"
+                            class="f-16 ls-0 mB5"
+                          >
+                            {{ deliveryTest(item) }}
+                          </p>
+                          <div *ngIf="deliveryTest(item) == ''">
+                            <p class="f-16 ls-0 mB5" *ngIf="data.response">
+                              <span class="bold">
+                                {{ item.serviceName }} Delivery
+                              </span>
+                              service is currently paused. Click to resume.
+                            </p>
+                            <p class="f-16 ls-0 mB5" *ngIf="!data.response">
+                              <span class="bold">
+                                {{ item.serviceName }} Delivery
+                              </span>
+                              service is currently active. Click to pause.
+                            </p>
+                          </div>
+                          <div
+                            (click)="actionDelivery(item.serviceName, data)"
+                            class="btn-clrs bg-success {{
+                              deliveryDisable(item) ? 'disabled' : ''
+                            }}"
+                            *ngIf="data.response"
+                          >
+                            {{ item.serviceName }} Delivery - Resume
+                          </div>
+                          <div
+                            (click)="actionDelivery(item.serviceName, data)"
+                            class="btn-clrs maroon-bg {{
+                              deliveryDisable(item) ? 'disabled' : ''
+                            }}"
+                            *ngIf="!data.response"
+                          >
+                            {{ item.serviceName }} Delivery - Pause
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+      class="col-sm-3"
+     
+    >
+     <!-- <div>
+        <div class="new-box">
+          <p class="black-c card-bod">Delivery Service</p>
+
+          <div class="mT20 f-21 ls-1">
+            <p class="f-16 ls-0" *ngIf="storedata.actionBtnArr[1].item=='Resume Delivery'" >
+              This service is currently paused. Click to resume.
+            </p>
+            <p class="f-16 ls-0" *ngIf="storedata.actionBtnArr[1].item=='Pause Delivery'" >
+              This service is currently active. Click to pause.
+            </p>
+            <div
+            (click)="deliveryOrders()"
+              class="btn-clrs bg-success"
+              *ngIf="storedata.actionBtnArr[1].item=='Resume Delivery'"
+            >
+              Resume
+            </div>
+            <div
+            (click)="deliveryOrders()"
+              class="btn-clrs maroon-bg"
+              *ngIf="storedata.actionBtnArr[1].item=='Pause Delivery'"
+            >
+              Pause
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    </div>
+   <!-- <div class="box  {{storedata.actionBtnArr[1].item=='Resume Delivery' ? 'bg-success':'maroon-bg'}}" (click)="deliveryOrders()">
+      <p class="mT32 f-21 ls-1">
+        <span *ngIf="storedata.actionBtnArr[1].item=='Resume Delivery'">Resume Delivery Orders</span>
+        <span *ngIf="storedata.actionBtnArr[1].item=='Pause Delivery'">Pause Delivery Orders</span>
+      </p>
+    </div> -->
+    <!--<div class="box  {{storedata.radioArr[3].item=='Is Curbside?' && storedata.radioArr[3].response=='NO' ? 'bg-success':'maroon-bg'}}" (click)="dataChange(storedata.radioArr[3],'curbside')">
+      <p class="mT32 f-21 ls-1">
+        <span *ngIf="storedata.radioArr[3].response=='NO'">Resume CurbSide Orders</span>
+        <span *ngIf="storedata.radioArr[3].response=='YES'">Pause Curbside Orders</span>
+      </p>
+    </div>
+    <div class="box  {{storedata.radioArr[5].item=='Is Broadcast?' && storedata.radioArr[5].response=='NO' ? 'bg-success':'maroon-bg'}}" (click)="dataChange(storedata.radioArr[5],'broadcast')">
+      <p class="mT32 f-21 ls-1">
+        <span *ngIf="storedata.radioArr[5].response=='NO'">Resume Broadcast</span>
+        <span *ngIf="storedata.radioArr[5].response=='YES'">Pause Broadcast</span>
+      </p>
+    </div> -->
+    <!--<div class="box  {{storedata.radioArr[4].item=='Is Feedback?' && storedata.radioArr[4].response=='NO' ? 'bg-success':'maroon-bg'}}" (click)="dataChange(storedata.radioArr[4],'Review')">
+      <p class="mT32 f-21 ls-1">
+        <span *ngIf="storedata.radioArr[4].response=='NO'">Resume Review</span>
+        <span *ngIf="storedata.radioArr[4].response=='YES'">Pause Review</span>
+      </p>
+    </div>-->
+   
+    <div class="clearfix"></div>
+    <div class="text-center mT50">
+      <button (click)="servicesFlag=false" type="button" class="btn black-c white-bg f-21 black-bod">Back</button>
+    </div>
+  </div>
+  <div *ngIf="pinVerified && !servicesFlag">
+    <div (click)="pauseresumeServices()" style="background-color:#dc3545!important;border:none;color: white;" class="box bg-secondary">
+      <p class="mT32">Manage Services</p>
+    </div>
+    <!--<div class="box  {{storedata.actionBtnArr[0].item=='Resume Store' ? 'bg-success':'maroon-bg'}} " (click)="textOrders()">
+      <p class="mT32">
+        <span *ngIf="storedata.actionBtnArr[0].item=='Resume Store'">Resume Text Orders</span>
+        <span *ngIf="storedata.actionBtnArr[0].item=='Pause Store'">Pause Text Orders</span>
+      </p>
+    </div> -->
+    <div (click)="refund()" class="box bg-grey">
+      <p class="mT32">Add Tip or Delivery / Refund</p>
+    </div>
+   <!-- <div (click)="storeOperation()" style="background-color:#17a2b8!important; " class="box bg-dark">
+      <p class="mT32">Store Operation</p>
+    </div>-->
+<div (click)="items()" style="background-color:#ffc107!important;border:none;color: black;" class="box bg-primary">
+  <p class="mT32">Items Out of Stock Manager</p>
+</div>
+<div class="clearfix"></div>
+<!--<div class="box  {{storedata.actionBtnArr[1].item=='Resume Delivery' ? 'bg-success':'maroon-bg'}}" (click)="deliveryOrders()">
+  <p class="mT32">
+    <span *ngIf="storedata.actionBtnArr[1].item=='Resume Delivery'">Resume Delivery Orders</span>
+    <span *ngIf="storedata.actionBtnArr[1].item=='Pause Delivery'">Pause Delivery Orders</span>
+  </p>
+</div> -->
+<div (click)="testStore()"style="background-color:white!important;color:black;border:1px solid black; " class="box bg-primary">
+  <p class="mT32">Test Store</p>
+</div>
+<!--<div (click)="storeHours()" style="background-color:#17a2b8!important; " class="box yellow-bg">
+  <p class="mT32">Store Hours</p>
+</div>-->
+<div (click)="modifiers()" style="background-color:#ffc107!important;border:none;color: black;" class="box bg-secondary">
+  <p class="mT32">Modifiers  Out of Stock Manager</p>
+</div>
+
+<div (click)="feedbackHistory()" style="border:none;color: white;" class="box bg-grey">
+  <p class="mT32"> PAST REVIEWS</p>
+</div>
+
+
+
+
+<div class="clearfix"></div>
+
+
+</div>
+</div>
+<app-footer *ngIf="!loading"></app-footer>
+<app-text-popup ></app-text-popup>
+<app-delivery-popup></app-delivery-popup>
+<div  class="modal fade" data-controls-modal="modalConfirmDelete" id="dangerPopup" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading mod-head uppercase"> {{popHeader}}</p>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <i class="fas fa-times fa-4x animated rotateIn"></i>
+        <h4 class="capitalize">{{popMessage}}</h4>
+      </div>
+      <!--Footer-->
+      <div style="height:auto" class="modal-footer flex-center">
+        <a data-dismiss="modal" class="btn  btn-outline-danger mT30 mB30 f-22">close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<div class="modal fade" data-controls-modal="modalConfirmSuccess" data-backdrop="static" data-keyboard="false"
+  id="successPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading mod-head uppercase">{{popHeader}}</p>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <i class="fas fa-check green-text fa-4x animated rotateIn"></i>
+        <h4  class="capitalize">{{popMessage}}</h4>
+      </div>
+      <!--Footer-->
+      <div style="height:auto" class="modal-footer flex-center">
+        <a data-dismiss="modal" class="btn  btn-outline-success mT30 mB30 f-22">close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

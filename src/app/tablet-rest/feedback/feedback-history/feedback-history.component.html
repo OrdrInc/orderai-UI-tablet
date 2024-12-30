@@ -1,0 +1,160 @@
+<mat-dialog-content style="max-height: unset !important">
+  <h4
+    class="title"
+    style="text-align: center; font-weight: bold; font-size: 20px"
+  >
+    {{ data.restName }}
+    <i class="fa fa-times f-20 fRight" (click)="close()" aria-hidden="true"></i>
+  </h4>
+  <hr style="margin: 2px" />
+  <div>
+    <div class="col-sm-12 text-center">
+      <mat-form-field class="w20">
+        <input
+          matInput
+          autocomplete="off"
+          [matDatepicker]="fromPicker"
+          placeholder="From"
+          value
+          [(ngModel)]="fromDate"
+          name="fromDate"
+          #name="ngModel"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="fromPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #fromPicker></mat-datepicker>
+      </mat-form-field>
+      &nbsp;&nbsp;
+      <mat-form-field class="w20">
+        <input
+          matInput
+          autocomplete="off"
+          [matDatepicker]="toPicker"
+          placeholder="To"
+          value
+          [(ngModel)]="toDate"
+          name="toDate"
+          #name="ngModel"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="toPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #toPicker></mat-datepicker>
+      </mat-form-field>
+      &nbsp;&nbsp;
+      <button
+        mat-raised-button
+        class="black-bg white-c mL20 mB20"
+        type="submit"
+        (click)="search()"
+      >
+        Search
+      </button>
+    </div>
+    <div class="flex-container text-center" *ngIf="loading">
+      <img
+        src="https://i.gifer.com/embedded/download/8REG.gif"
+        class="rounded img-fluid"
+        alt="..."
+      />
+    </div>
+    <div *ngIf="!loading">
+      <div
+        *ngIf="errorTextFlag"
+        class="alert alert-danger"
+        style="width: 50%; margin: auto"
+        role="alert"
+      >
+        {{ errorText }}
+      </div>
+      <div *ngIf="showTable">
+        <div style="padding: 12px">
+          <h3 class="report-title f-18">
+           
+          </h3>
+          <p *ngIf="!hidePagination" class="text-center pT20 pB20">
+            <span class="fLeft">Items Per Page</span>
+            <mat-select
+              (ngModelChange)="itemsperpage($event)"
+              placeholder="Length"
+              style="width: 5%; float: left; border-bottom: 1px solid grey"
+              [(ngModel)]="length"
+              name="length"
+            >
+              <mat-option value="100">100</mat-option>
+              <mat-option value="200">200</mat-option>
+              <mat-option value="300">300</mat-option>
+              <mat-option value="500">500</mat-option>
+            </mat-select>
+            <span
+              title="Start"
+              (click)="start()"
+              class="f-20 bold pointer {{ startIndex == 1 ? 'disabled' : '' }}"
+              >&lt;&lt;</span
+            >
+            &nbsp;&nbsp;<span
+              title="Previous"
+              (click)="previous()"
+              class="f-20 bold pointer {{ startIndex == 1 ? 'disabled' : '' }}"
+              >&lt;</span
+            >
+            &nbsp;{{ startIndex }} - {{ endIndex }} of {{ totalCount }} &nbsp;
+            <span
+              title="Next"
+              (click)="next()"
+              class="f-20 bold pointer {{
+                endIndex == totalCount ? 'disabled' : ''
+              }}"
+            >
+              &gt;</span
+            >&nbsp;&nbsp;
+            <span
+              title="End"
+              (click)="end()"
+              class="f-20 bold pointer {{
+                endIndex == totalCount ? 'disabled' : ''
+              }}"
+            >
+              &gt;&gt;</span
+            >
+          </p>
+          <div class="text-center">
+            <table
+              id="DataTable"
+              class="text-center table table-bordered table-striped"
+            >
+              <thead>
+                <tr class="head-row">
+                  <th
+                    *ngFor="let col of reportHead"
+                    style="text-transform: uppercase"
+                    class="th-sm text-center bold"
+                  >
+                    {{ col.name }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-row" *ngFor="let order of history; index as i">
+                  <td class="head-row">{{ order.storeDate }}</td>
+                  <td class="head-row">{{ order.restId  | phoneFormat }}</td>
+                  <td class="head-row">{{ order.inTime }}</td>
+                  <td class="head-row">{{ order.outTime }}</td>
+                  <td class="head-row">{{ order.customerId |phoneFormat }}</td>
+                  <td class="head-row">{{ order.name }}</td>
+                  <td *ngIf="order.isDefaultFeedback" class="head-row">{{ order.feedback }}</td>
+                  <td *ngIf="!order.isDefaultFeedback" (click)="openFeedbackDetail(order)" style="text-decoration:underline;" class="head-row"><i>View</i></td>
+                  <td class="head-row">{{ order.type }}</td>
+                  <td class="head-row">{{ order.rating }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

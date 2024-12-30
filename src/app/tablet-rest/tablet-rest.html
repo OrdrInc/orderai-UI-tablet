@@ -1,0 +1,459 @@
+
+<!--<button (click)="pushStaticJson()">ciclk</button> -->
+<div id="container">
+    <app-header [resturantName]="resturantName" (resetRefundVariables)="resetRefundVariables()"></app-header>
+    <div id="body">
+        <div *ngIf="landscape">
+            <div class="split left w45 pT0 pB30">
+                <app-main-table [orderFlow]="orderFlow" [landscape]="landscape" [data]="data" [noOrders]="noOrders"
+                    (openOrder)="openOrder($event)">
+                </app-main-table>
+            </div>
+            <div class="split right w55 pB30">
+                <div *ngIf="!splitdata">
+                    <h2 class="text-center .pTp-50"><strong>Click On a order to view it's Details.</strong></h2>
+                </div>
+                <div *ngIf="splitdata">
+                    <div style="padding-bottom: 30%">
+                        <div class="col-lg-12 pL30 pT20">
+                            <app-order-detail-header [orderDetail]="orderDetail" (refundClick)="refundClick()">
+                            </app-order-detail-header>
+                            <div class="accordion md-accordion" id="accordionEx" role="tablist"
+                                aria-multiselectable="true">
+                                <div class="card">
+                                    <div id="collapseOne1" class="collapse show" role="tabpanel"
+                                        aria-labelledby="headingOne1" data-parent="#accordionEx">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class=" row col-sm-12 pB30" style=" margin: 0px;padding: 0px;">
+                                                    <span class="col-sm-12">
+                                                        <b>
+                                                        </b>
+                                                        <!--<p class="royal-blue pB20 text-center mB0 f-22 wlSpace pB15"> "
+                                                            {{orderDetail.customer.msg.text}} "
+                                                        </p> -->
+                                                    </span>
+                                                    <div class="col-sm-12 card">
+                                                        <app-order-summary [items]="items" [qty]="qty" [sizes]="sizes"
+                                                            [cursts]="cursts" [itemNames]="itemNames"
+                                                            [amounts]="amounts" [sauce]="sauce" [toppings]="toppings"
+                                                            [firstHalf]="firstHalf" [secondHalf]="secondHalf"
+                                                            [seasoning]="seasoning" [bread]="bread" [drizzle]="drizzle"
+                                                            [cheese]="cheese" [crustTopper]="crustTopper"
+                                                            [wingType]="wingType" [sides]="sides" [bake]="bake"
+                                                            [cut]="cut" [dipping]="dipping" [sauceBase]="sauceBase"
+                                                            [seasoningPackets]="seasoningPackets" [dressing]="dressing"
+                                                            [orderDetail]="orderDetail">
+                                                        </app-order-summary>
+                                                    </div>
+                                                    <div class="col-sm-12 text-center pT20">
+                                                        <app-payment-info [orderDetail]="orderDetail">
+                                                        </app-payment-info>
+                                                    </div>
+                                                </div>
+                                                <app-order-detail-eta (confirm)="confirm($event)"
+                                                    [orderDetail]="orderDetail" [landscape]="landscape" [eta]="eta"
+                                                    [tempETA]="tempETA" (setETA)="setETA($event)">
+                                                </app-order-detail-eta>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body mB50">
+                                        <app-accept-buttons [orderDetail]="orderDetail" [landscape]="landscape"
+                                            [tempETA]="tempETA" (closebutton)="closebutton()"
+                                            (acceptOrder)=acceptOrder($event)>
+                                        </app-accept-buttons>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!landscape">
+            <app-main-table [orderFlow]="orderFlow" [landscape]="landscape" [data]="data" [noOrders]="noOrders"
+                (openOrder)="openOrder($event)">
+            </app-main-table>
+            <div *ngIf="orderFlow">
+                <div>
+                    <div class="col-lg-12">
+                        <app-order-detail-header [orderDetail]="orderDetail" (refundClick)="refundClick()">
+                        </app-order-detail-header>
+                        <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+                            <div class="card">
+                                <div id="collapseOne1" class="collapse show" role="tabpanel"
+                                    aria-labelledby="headingOne1" data-parent="#accordionEx">
+                                    <div class="card-body">
+                                        <div class="">
+                                            <div class=" row col-sm-12 pR0 pB30">
+                                                <span class="col-sm-12">
+                                                    <b>
+                                                    </b>
+                                                   <!-- <p class="royal-blue msg-text text-center mB0 f-22 wlSpace pB15"> "
+                                                        {{orderDetail.customer.msg.text}} "
+                                                    </p> -->
+                                                </span>
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-10 card">
+                                                    <app-order-summary [items]="items" [qty]="qty" [sizes]="sizes"
+                                                        [cursts]="cursts" [itemNames]="itemNames" [amounts]="amounts"
+                                                        [sauce]="sauce" [toppings]="toppings" [firstHalf]="firstHalf"
+                                                        [secondHalf]="secondHalf" [seasoning]="seasoning"
+                                                        [bread]="bread" [drizzle]="drizzle" [cheese]="cheese"
+                                                        [crustTopper]="crustTopper" [wingType]="wingType"
+                                                        [sides]="sides" [bake]="bake" [cut]="cut" [dipping]="dipping"
+                                                        [sauceBase]="sauceBase" [seasoningPackets]="seasoningPackets"
+                                                        [dressing]="dressing" [orderDetail]="orderDetail">
+                                                    </app-order-summary>
+
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-10 mT20 text-center pR0">
+                                                    <app-payment-info [orderDetail]="orderDetail"></app-payment-info>
+                                                </div>
+                                            </div>
+                                            <app-order-detail-eta (confirm)="confirm($event)"
+                                                [orderDetail]="orderDetail" [eta]="eta" [landscape]="landscape"
+                                                [tempETA]="tempETA" (setETA)="setETA($event)">
+                                            </app-order-detail-eta>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body ">
+                                    <app-accept-buttons [orderDetail]="orderDetail" [landscape]="landscape"
+                                        [tempETA]="tempETA" (closebutton)="closebutton()"
+                                        (acceptOrder)=acceptOrder($event)></app-accept-buttons>
+
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col footer-txt">
+                                            <div>
+                                                <div style="color:black" class="footer-txt"> © 2019 <b>Ordr Inc.</b>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div style="float: right">
+                                                <div class="footer-txt" style="color: black"> Support: <b>(415)
+                                                        903-4020</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <app-footer [landscape]="landscape" [orderFlow]="orderFlow"></app-footer>
+</div>
+
+<!--PopUp's-->
+<app-options [id]="id" [storeDate]="storeDate" [restStatus]="restStatus" (extendETAPopup)="extendETAPopup()"
+    (pauses)="pauses()"></app-options>
+<app-new-order [orderCount]="orderCount" (clk)="click()"></app-new-order>
+<!--<app-extend-eta [extendPickupTemp]="extendPickupTemp" (resetETA)="resetETA()"></app-extend-eta>-->
+<app-etaupdate-success></app-etaupdate-success>
+<app-refund></app-refund>
+
+<!--exception-Popups- which needs to be present in main shell-->
+<div config="{backdrop: false, ignoreBackdropClick: true}" class="modal fade" id="pin-modal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-l modal-notify modal-success" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading mod-head">Store PIN</p>
+
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div *ngIf="pinAttempt >0 && pinAttempt <= 3" class="alert alert-danger" role="alert">
+                    Wrong Pin. Attempts {{this.pinAttempt}} of 3.
+                </div>
+                <div *ngIf="pinAttempt >3" class="alert alert-danger" role="alert">
+                    You have entered Wrong Pin 3 times. Call (415) 903-4020 for support.
+                </div>
+                <div *ngIf="storePinlengthMessage" class="alert alert-danger" role="alert">
+                    Please enter a valid 4 Digit PIN
+                </div>
+                <div>
+
+                    <strong>
+                        <h5 class="bold f-23">Enter Your Store PIN (4-Digit):</h5>
+                    </strong>
+                    <div class="col-auto w70 pL0 margin-auto pT10">
+
+                        <div class="input-group mb-2">
+
+                            <input style="height:45px" appAutoFocus maxlength=4 type="number" [(ngModel)]="storePIN"
+                                class="form-control" id="storepinn" placeholder="PIN">
+
+                        </div>
+                    </div>
+                    <div class="">
+                        <a *ngIf="extendeta == true" (click)="extendPin()"
+                            class="btn  btn-success  mT30 f-22">Submit</a>
+                        <a *ngIf="extendeta == false" (click)="pauses()" class="btn  btn-success  mT30 f-22">Submit</a>
+                    </div>
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" class="btn  btn-outline-success">close</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<div class="modal fade" id="refund" style="height:auto;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+        <!--Content-->
+        <div *ngIf="initateRefund" class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">INITIATE REFUND</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="card pT20 pB20">
+
+                    <div class="flex-center">
+                        <a data-dismiss="modal" (click)="refundType('FULL')" class="btn btn-info f-22">Full
+                            Refund</a><br>
+                    </div>
+                    <div class="flex-center">
+                        <a data-dismiss="modal" (click)="refundType('PARTIAL')"
+                            class="btn btn-info pL20 pR20 f-22">Partial
+                            Refund</a><br>
+                    </div>
+                    <div class="flex-center">
+                        <a data-dismiss="modal" (click)="refundType('ITEM')" class="btn btn-info f-22">Item
+                            Refund</a><br>
+                    </div>
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" (click)="click()" class="btn btn-info">Close</a>
+            </div>
+        </div>
+        <div *ngIf="fullRefund" class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">FULL REFUND</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+               <!-- <div class="card pT20 pB20">
+                    <h5>Select a Reason from Below Dropdown</h5>
+                    <select class="form-control w70 margin-auto" id="reason" required>
+                        <option selected="selected" value="Customer was overcharged">Customer was overcharged
+                        </option>
+                        <option value="Order was not complete">Order was not complete</option>
+                        <option value="Order was delayed">Order was delayed</option>
+                        <option value="Order was not received">Order was not received</option>
+                        <option value="Managers Decision">Managers Decision</option>
+                    </select>
+                </div> -->
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" (click)="submitRefundRequest('FULL')" class="btn btn-info">Submit</a>
+                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
+            </div>
+        </div>
+        <div *ngIf="partialRefund" class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">PARTIAL REFUND</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="card pT20 pB20">
+                    <h5>Enter the Amount that you want to refund</h5>
+                    <div class="col-auto w70 margin-auto pT20">
+                        <div class="input-group mb-2">
+                            <div *ngIf="amountValidation()==true" class="alert alert-danger" role="alert">
+                                Refunt Amount Can't be greater than Total Amount
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input type="number" [(ngModel)]="partialRefundAmount" class="form-control"
+                                id="inlineFormInputGroup" placeholder="Amount">
+                        </div>
+                    </div>
+                   <!-- <div class="col-auto  w70 margin-auto pT20">
+                        <div class="input-group mb-2">
+                            <select class="form-control w70 margin-auto" id="partialRefundReason" required>
+                                <option value="Order was delayed">None</option>
+                                <option selected="selected" value="Customer was overcharged">Customer was
+                                    overcharged
+                                </option>
+                                <option value="Order was not complete">Order was not complete</option>
+                                <option value="Order was delayed">Order was delayed</option>
+                                <option value="Order was not received">Order was not received</option>
+                                <option value="Managers Decision">Managers Decision</option>
+                            </select>
+
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" (click)="submitRefundRequest('PARTIAL')"
+                    class="btn btn-info {{partialRefundAmount==''?'grey':''}} {{amountValidation()==true?'grey':''}}">Submit</a>
+                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
+            </div>
+        </div>
+        <div *ngIf="itemRefund" class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">ITEM REFUND</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="card pB20 pT20">
+                    <h5 class="pB20">Select an Item from dropdown to Refund</h5>
+                    <select class="form-control w70 margin-auto" id="item" required>
+                        <option *ngFor="let item of orderDetail.items" selected="selected" value="{{item.item.name}}">
+                            {{item.item.name}}
+                        </option>
+                    </select>
+                    <!--<select class="form-control w70 margin-auto" id="itemRefundReason" required>
+                        <option value="Order was delayed">None</option>
+                        <option selected="selected" value="Customer was overcharged">Customer
+                            was
+                            overcharged
+                        </option>
+                        <option value="Order was not complete">Order was not complete</option>
+                        <option value="Order was delayed">Order was delayed</option>
+                        <option value="Order was not received">Order was not received</option>
+                        <option value="Managers Decision">Managers Decision</option>
+                    </select> -->
+                    <!-- <input type="text" [(ngModel)]="itemRefundReason" class="form-control w70 mT20 margin-auto"
+                       id="inlineFormInputGroup" placeholder="Reason for Item Refund"> -->
+                </div>
+            </div>
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" (click)="submitRefundRequest('ITEM')" class="btn btn-info">Submit</a>
+                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
+            </div>
+        </div>
+        <div *ngIf="refundSummary" class="modal-content text-center">
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">REFUND SUMMARY</h5>
+            </div>
+            <div class="modal-body">
+                <div class="card pT20 pB20">
+                    <h5>Refund Type: {{type}} </h5>
+                    <h5 *ngIf="singleItemRefund">Refund Item: {{item}}</h5>
+                    <h5>Refund Amount: ${{amount}} </h5>
+                   <!-- <h5>Refund Reason: {{reasonrefund}}</h5> -->
+                    <br>
+                    <div *ngIf="pinAttempt >0 && pinAttempt <= 3" class="alert alert-danger" role="alert">
+                        Wrong Pin. Attempts {{this.pinAttempt}} of 3.
+                    </div>
+                    <div *ngIf="pinAttempt >3" class="alert alert-danger" role="alert">
+                        You have entered Wrong Pin 3 times. Call (415) 903-4020 for support.
+                    </div>
+                    <strong>
+                        <h5 class="bold f-23">Enter Your Store PIN (4-Digit):</h5>
+                    </strong>
+                    <div class="col-auto w70 pT20 margin-auto">
+                        <div class="input-group mb-2">
+                            <input maxlength=4 type="number" [(ngModel)]="storePIN" class="form-control"
+                                id="inlineFormInputGroup" placeholder="PIN">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:auto" class="modal-footer flex-center">
+                <a (click)="finalRefund()" class="btn btn-info">Process Refund</a>
+                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade " style="top:0px!important;overflow: auto!important;" id="extendeta" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading mod-head">Extend ETA</p>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <h4>Extend ETA: Pickup </h4>
+                <button long-press [timeout]="250" (onLongPress)="extendETA('default','pickup')"
+                    (click)="extendETA('default','pickup')"
+                    class="btn {{extendPickupTemp=='default'?'green-button-1':'empty-button'}}">
+                    Default
+                </button>
+                <br>
+                <button long-press [timeout]="250" (onLongPress)="extendETA('10','pickup')"
+                    (click)="extendETA('10','pickup')"
+                    class="btn {{extendPickupTemp=='10'?'green-button-1':'empty-button'}}">
+                    +10
+                </button>
+                <button long-press [timeout]="250" (onLongPress)="extendETA('20','pickup')"
+                    (click)="extendETA('20','pickup')"
+                    class="btn {{extendPickupTemp=='20'?'green-button-1':'empty-button'}}">
+                    +20
+                </button>
+                <button long-press [timeout]="250" (onLongPress)="extendETA('30','pickup')"
+                    (click)="extendETA('30','pickup')"
+                    class="btn {{extendPickupTemp=='30'?'green-button-1':'empty-button'}}">
+                    +30
+                </button>
+                <br><br>
+                <h4>Extend ETA: Delivery </h4>
+                <button long-press [timeout]="250" (onLongPress)="extendETA('default','delivery')"
+                    (click)="extendETA('default','delivery')"
+                    class="btn {{extendDeliveryTemp=='default'?'green-button-1':'empty-button'}}">
+                    Default
+                </button>
+                <br>
+                <button long-press [timeout]="250" (onLongPress)="extendETA('10','delivery')"
+                    (click)="extendETA('10','delivery')"
+                    class="btn {{extendDeliveryTemp=='10'?'green-button-1':'empty-button'}}">
+                    +10
+                </button>
+                <button long-press [timeout]="250" (onLongPress)="extendETA('20','delivery')"
+                    (click)="extendETA('20','delivery')"
+                    class="btn {{extendDeliveryTemp=='20'?'green-button-1':'empty-button'}}">
+                    +20
+                </button>
+                <button long-press [timeout]="250" (onLongPress)="extendETA('30','delivery')"
+                    (click)="extendETA('30','delivery')"
+                    class="btn {{extendDeliveryTemp=='30'?'green-button-1':'empty-button'}}">
+                    +30
+                </button>
+
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a (click)="resetETA()" class="btn btn-info f-22">Save</a>
+                <a data-dismiss="modal" class="btn btn-info f-22">close</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>

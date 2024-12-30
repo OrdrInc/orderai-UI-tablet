@@ -1,0 +1,7 @@
+.white-c{
+    color: white;
+}
+.disabled{
+    color: darkgray;
+    pointer-events: none;
+  }

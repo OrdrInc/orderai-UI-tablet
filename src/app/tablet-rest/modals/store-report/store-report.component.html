@@ -1,0 +1,148 @@
+<div class="modal fade " style="top:0px!important;overflow: auto!important;" id="storeReport" tabindex="-1"
+  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info modal-xl mL20 mR20" style="max-width: unset!important"
+    role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <h3 class="heading mod-head">STORE REPORT</h3>
+      </div>
+      <!--Body-->
+      <div *ngIf="storemetrics.length!=0" class="modal-body">
+        <h4 class="store-met" style="text-transform:capitalize"> the store metrics for today.</h4>
+        <div class=" row pT20">
+          <div class="col-sm-6 card pB20">
+            <h4 class="pT20 store-met">Pick Up</h4>
+            <div class="row">
+              <div class="col-sm-6 border-right">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4><span class="store-dollar bold">{{storemetrics.pickup.orderCount}}</span> <br> <span class="">
+                    Orders</span></h4>
+              </div>
+              <div class="col-sm-6">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h3 class="pT10 store-dollar bold"> ${{storemetrics.pickup.dollarValue}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 card pB20">
+            <h4 class="pT20 store-met">Delivery</h4>
+            <div class="row">
+              <div class="col-sm-6 border-right">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4> <span class="store-dollar bold"> {{storemetrics.delivery.orderCount}} </span> <br>
+                  <span class=""> Orders</span></h4>
+              </div>
+              <div class="col-sm-6">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h3 class="pT10 store-dollar bold"> ${{storemetrics.delivery.dollarValue}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 card pB20">
+            <h4 class="pT20 store-met">Collect Payment</h4>
+            <div class="row">
+              <div class="col-sm-6 border-right">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4><span class="store-dollar bold">{{storemetrics.cash.orderCount}}</span> <br> <span class="">
+                    Orders</span></h4>
+              </div>
+              <div class="col-sm-6">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h3 class="pT10 store-dollar bold"> ${{storemetrics.cash.dollarValue}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 card pB20">
+            <h4 class="pT20 store-met">Prepaid</h4>
+            <div class="row">
+              <div class="col-sm-6 border-right">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4> <span class="store-dollar bold">{{storemetrics.card.orderCount}}</span> <br> <span class="">
+                    Orders</span></h4>
+              </div>
+              <div class="col-sm-6">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h3 class="pT10 store-dollar bold"> ${{storemetrics.card.dollarValue}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 card pB20">
+            <h4 class="pT20 store-met">Refund</h4>
+            <div class="row">
+              <div class="col-sm-6 border-right">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4> <span class="store-dollar bold">{{storemetrics.refund.orderCount}}</span> <br> <span class="">
+                    Orders</span></h4>
+              </div>
+              <div class="col-sm-6">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h3 class="pT10 store-dollar bold"> ${{storemetrics.refund.dollarValue}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 card pB20">
+
+          </div>
+
+
+          <div class="col-sm-6 card pB20">
+            <h4 class="">&nbsp;</h4>
+            <div class="row">
+              <div class="col-sm-6 border-right">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4 class="pT20 store-met">Del. Fee</h4>
+                <h4 class="store-dollar bold">${{storemetrics.totalDelFee}}</h4>
+              </div>
+              <div class="col-sm-6 ">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4 class="pT20 store-met">Tip</h4>
+                <h4 class="store-dollar bold">${{storemetrics.totalTip}}</h4>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-sm-6 card pB20">
+            <h4 class="">&nbsp;</h4>
+            <div class="row">
+
+              <div class="col-sm-6 border-right">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4 class="pT20 store-met">Tax</h4>
+                <h4 class="store-dollar bold">${{storemetrics.totalTax}}</h4>
+              </div>
+              <div class="col-sm-6 ">
+                <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+                <h4 class="pT20 store-met">Total</h4>
+                <h4 class="store-dollar bold">${{storemetrics.subtotal}}</h4>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-sm-6 card pB20">
+            <h4 class="pT20 store-met bold">Total Orders</h4>
+            <div class="row">
+              <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+              <h1 class="margin-auto bold store-dollar bold">
+                {{storemetrics.totalOrders}}</h1>
+            </div>
+          </div>
+          <div class="col-sm-6 card pB20">
+            <h4 class="pT20 store-met bold">Grand Total</h4>
+            <div class="row">
+              <img width="100px;" *ngIf="smallload" src="../assets/img/eatstreet-loading.gif">
+              <h1 class="margin-auto bold store-dollar bold">${{storemetrics.grandTotal}}</h1>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!--Footer-->
+      <div style="height:auto" class="modal-footer flex-center">
+        <a data-dismiss="modal" class="btn btn-info">close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

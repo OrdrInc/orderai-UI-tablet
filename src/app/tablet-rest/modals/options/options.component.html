@@ -1,0 +1,55 @@
+<div class="modal fade right modal-1 " id="modalPoll-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="false">
+  <div style="width:100%" class="modal-dialog modal-full-height modal-right modal-notify modal-info mT0 float-right"
+    role="document">
+    <div class="modal-content h70">
+
+      <div class="modal-header" style="background-color: black">
+        <p class="heading mod-head" style="text-transform: uppercase;
+                        
+                         ">options
+        </p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text" style="font-size: 40px;">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-cog fa-4x mb-3 animated rotateIn" style="color: gray"></i>
+          <p>
+            <strong class="nav-items" style="font-size: 22px;">Manage your Restaurant</strong>
+          </p>
+        </div>
+        <hr>
+
+        <p (click)="pauses()" Class="md-form">
+          <span *ngIf="restStatus" class="nav-items"> Pause Restaurant</span>
+          <span *ngIf="!restStatus" class="nav-items">Resume Restaurant</span>
+
+        </p>
+        <hr>
+        <div (click)="storeReport()" class="md-form">
+          <p Class="bold" class="nav-items"> Store Report
+          </p>
+        </div>
+        <hr>
+        <div (click)="extendETAPopup()" class="md-form">
+          <p Class="bold" class="nav-items"> Extend ETA
+          </p>
+        </div>
+        <hr>
+        <div (click)="contactus()" class="md-form">
+          <p Class="bold" class="nav-items"> Contact
+            Us
+          </p>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+<app-contact></app-contact>
+<app-store-report [storemetrics]="storemetrics" [smallload]="smallload"></app-store-report>
+<app-resume></app-resume>
+<app-pause (pauses)="pauses()"></app-pause>

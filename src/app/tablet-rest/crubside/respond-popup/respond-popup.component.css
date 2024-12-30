@@ -1,0 +1,18 @@
+.grey-c{
+    color: lightgray!important;
+}
+.black-c{
+    color:black!important;
+}
+.btn-grey{
+    background-color: grey!important;
+}
+.disabled{
+    pointer-events: none;
+    background-color: grey;
+    color: lightgray;
+}
+.sendEta{
+    background-color:#3fab59;
+    border: 1px solid #3fab59; 
+}

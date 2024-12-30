@@ -1,0 +1,32 @@
+<div class="modal fade" id="respondPop" style="top:0%!important" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div style="background-color: black!important;" class="modal-header d-flex justify-content-center">
+        <p style="font-size: 25px!important;" class="heading mod-head">Select an  ETA</p>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <div class="col-auto  pL0 margin-auto pT10">
+          <span *ngIf="timeJson.isReply==true">
+          <p class="f-30 bold black-c" style="word-spacing: 1px;letter-spacing: 0.75px;">Your response is  {{timeJson.replyVal}} minutes! </p>
+          <p class="f-20 bold black-c" style="word-spacing: 1px;letter-spacing: 0.75px;">To update the time - <span style="color:#3fab59!important;text-decoration: underline;" (click)="resend()"><a >Click here</a></span>
+          </span>
+          <div *ngIf="timeJson.isReply==false" style="height:auto" class="text-center pT0">
+            <a *ngFor='let data of timeJson.btnValue' (click)="selectedTime= data" style="width: 30%; border-radius: 8px;" class="btn {{selectedTime==''?'btn-warning black-c':''}} {{selectedTime==data?'btn-warning black-c':''}} {{(selectedTime!=data && selectedTime!='')?'btn-grey grey-c':''}} bold f-18 mR30 mL30 mB40 ">{{data}} Mins</a>
+
+          </div>
+      </div>
+      </div>
+      <!--Footer-->
+      <div style="height:auto" class="modal-footer flex-center pT0">
+      <!--  <a *ngIf="timeJson.isReply==true" (click)="resend()" style="background-color: black;border: 1px solid #3fab59;" class="btn  btn-success f-18 mR20">Resend</a>-->
+        <a *ngIf="timeJson.isReply==false" (click)="send()" style="border-radius:8px" class="btn {{selectedTime==''?'disabled':'sendEta'}}  bold f-18 mR20">Send</a>
+        <a data-dismiss="modal" (click)="close()" style="color:rgb(2, 1, 1)!important;border: 1px solid #3fab59;border-radius:8px" class="btn  white-bg black-c f-18 bold mL20">Close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

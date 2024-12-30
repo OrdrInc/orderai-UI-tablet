@@ -1,0 +1,31 @@
+<mat-dialog-content style="max-height: unset !important">
+  <h4
+    class="title"
+    style="text-align: center; font-weight: bold; font-size: 20px"
+  >
+   CUSTOMER FEEDBACK
+    <i class="fa fa-times f-20 fRight" (click)="close()" aria-hidden="true"></i>
+  </h4>
+  <hr style="margin: 2px" />
+  <div class="mT20 mL30">
+    <div>
+      <!--<div class="text-center">
+        <span class="bold f-15">Name: </span>
+        <span class=" f-15 mR30">{{ data.name }}</span>
+        <span class="bold f-15">Phone: </span>
+        <span class=" f-15 mR30">{{ formatPhone(data.custId) }}</span>
+        <span class="bold f-15">Date: </span>
+        <span class=" f-15 mR30">{{ data.storeDate }}</span>
+        <span class="bold f-15">Time: </span>
+        <span class=" f-15">{{ data.displayTime }}</span>
+      </div>-->
+      <div class="mT20">
+        <div *ngFor="let question of data.customQuestionFeedback; index as i">
+          <p class="f-18 Mb5">{{i+1}}. {{ question.question }}</p>
+          
+          <p class="bold pL20 f-20"><i>{{ question.value }}</i></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

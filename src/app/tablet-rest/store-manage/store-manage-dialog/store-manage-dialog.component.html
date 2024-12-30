@@ -1,0 +1,590 @@
+
+<mat-dialog-content style="max-height:unset!important">
+  
+  <h4  class = "title" style = "text-align: center; font-weight: bold; font-size: 20px;"> {{api.resturantName}} <i class="fa fa-times f-20 fRight" (click)="close()" aria-hidden="true"></i></h4>
+  <hr style = "margin: 2px;">
+
+ <div *ngIf = "data.items"> 
+    <h4 class = "title" style = "font-weight: bold; font-size: 14px;"> INFO: <ul>
+        <li>Checked Item - In Stock</li>
+        <li>Unchecked Item - Out of Stock </li>
+      </ul></h4>
+      <h4 class = "title" style = "font-size: 16px;"> Uncheck item to make it <b>out of stock </b>in the selected store and vice versa. </h4>
+
+  <div class="row">
+  <div *ngFor = "let category of data.data; index as i" class="col-sm-4">
+  <p class="cat-name">{{category.categoryName}}</p>
+  <p *ngFor="let items of category.itemsList" >
+   
+    <mat-checkbox [(ngModel)]="items.availability"
+    color="primary"
+    >
+</mat-checkbox> &nbsp; {{items.displayName}}
+  </p>
+  </div>
+  </div>
+ </div>
+ <div *ngIf = "data.modifiers"> 
+  <h4 class = "title" style = "font-weight: bold; font-size: 14px;"> INFO: <ul>
+      <li>Checked Item - In Stock</li>
+      <li>Unchecked Item - Out of Stock </li>
+    </ul></h4>
+    <h4 class = "title" style = "font-size: 16px;"> Uncheck item to make it <b>out of stock </b>in the selected store and vice versa. </h4>
+<div class="row">
+<div *ngFor = "let category of data.data; index as i" class="col-sm-4">
+<p class="cat-name">{{category.categoryName}}</p>
+<p *ngFor="let items of category.items" >
+
+<mat-checkbox [(ngModel)]="items.availability"
+color="primary"
+(ngModelChange)="updateModifiers(items)">
+</mat-checkbox> &nbsp; {{items.displayName}}
+</p>
+</div>
+</div>
+</div>
+<div class="row" *ngIf="data.storehours">
+  <div  class="mT20  col-sm-6">
+  <div  *ngFor = "let day of data.data.storeHours; index as i">
+    <div style = "padding-right:4px; flex-shrink: 0">
+        <h4 class = "title"><span [ngStyle] = "{color : showBtn===i ? '#dc143c' : '#000000' }"> {{day.item}}</span> <span *ngIf = "!isEdit" class = "title edit-text" (click) = "add(day, i)"><i>add</i></span>  <span *ngIf = "!isEdit" class = "title edit-text" (click) = "remove(day, i)"><i>remove</i></span></h4></div>
+        <div *ngIf = "day.close_0 !== '*'" style = "display: flex; justify-content: flex-start; align-content: space-between; padding-bottom: 7px;">
+          <div  style = "flex-basis: 40%; padding-right: 6px;">
+            <input
+            [readonly]="showBtnCol1!==i"
+            [(ngModel)] = "day.open_0"
+            type = "text"
+            class = "form-control"
+            >
+          </div>
+          <div style = "flex-basis: 40%; padding-left: 6px;">
+            <input
+            [readonly]="showBtnCol1!==i"
+            [(ngModel)] = "day.close_0"
+            type = "text"
+            class = "form-control"
+            >
+          </div>
+          <div style = "padding:4px;">
+            <span *ngIf = "!isEdit" (click) = "onEdit_col1(i)" class = "title edit-text"><i>edit</i></span>
+          </div>
+        </div>
+    
+    
+        <div style = "display: flex; justify-content: flex-start; align-content: space-between; padding-bottom: 7px;">
+      <div  style = "flex-basis:40%; padding-right: 6px;">
+        <input
+        [readonly]="showBtnCol1!==i"
+        [(ngModel)] = "day.open"
+        type = "text"
+        class = "form-control"
+        >
+      </div>
+      <div style = "flex-basis:40%; padding-left: 6px;">
+        <input
+        [readonly]="showBtnCol1!==i"
+        [(ngModel)] = "day.close"
+        type = "text"
+        class = "form-control"
+        >
+      </div>
+      <div style = "padding:4px;">
+        <span *ngIf = "!isEdit" (click) = "onEdit_col1(i)" class = "title edit-text"><i>edit</i></span>
+      </div>
+    </div>
+    
+    <div  *ngIf = "showBtnCol1===i" class ="wrapper" style ="padding:  7px;width: 50%; justify-content: center;">
+      <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol1===i"  style = "padding: 5px;">
+        <button class="btn "   (click) = "editItem(day)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;font-weight: bold;padding:10px;border-radius: 8px; color: white;"> Update</button>  
+      </div>
+      <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol1===i" style = "padding: 5px;"> 
+      <button class="btn"   (click) = "cancelEdit1(day, i)" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;font-weight: bold;padding:10px;border-radius: 8px;"> Cancel </button>  
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="col-sm-6 mT20">
+    <span  *ngFor = "let radio of data.data.textArr; index as i"   >
+      <div class="" style="padding-bottom: 10px;"  *ngIf="radio.db=='openAdjustTime' || radio.db=='closeAdjustTime'"> 
+      <span  *ngIf = "radio.type === 'text'">
+         <h4 class = "title"><i class="fa fa-info-circle f-20" style="color:#31afd5" (click)="info(i)" aria-hidden="true"></i><span [ngStyle] = "{color : showBtn===i ? '#dc143c' : '#000000' }"> {{radio.item}} </span>
+            <span *ngIf = "!isEdit" (click) = "onEdit(i)" class = "title edit-text"><i>edit</i></span></h4>
+         <input
+         style="width: 95%;"
+         [readonly]="showBtn!==i"
+         [(ngModel)] = "radio.response"
+         type = "text"
+         class = "form-control"
+         >
+       </span>
+       <span *ngIf="infoBtn==i" class="f-18">This is a sample text</span>
+       <div  *ngIf = "showBtn===i" class ="wrapper" style ="padding:  7px;">
+       <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i"  style = "padding: 5px;">
+         <button class="btn "   (click) = "editItem(radio)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold;"> Update</button>  
+       </div>
+       <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i" style = "padding: 5px;"> 
+       <button class="btn"   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold;"> Cancel </button>  
+       </div>
+     </div></div>
+    </span>
+    <h4 class = "title f-22 bold "> Store Hours: </h4>
+    <textarea
+          autofocus
+          value
+          readonly
+          id = "user-txt"
+          placeholder="Add store specific notes"
+          class="form-control rounded-0 user-msg animated bounceIn bold "
+          type = "text user-text-box"
+          id="exampleFormControlTextarea2"
+          rows="8"
+          [(ngModel)] = "data.data.hoursText"> </textarea>
+  
+  </div>
+</div>
+<div  *ngIf="data.storeoperation">
+  <div class="width:100% margin:auto">
+    <span  *ngFor = "let radio of data.data.textArr; index as i"   >
+      <div class="col-sm-6" style="padding-bottom: 10px;display: inline-block;"  *ngIf="radio.db=='cb_maxOrder' || radio.db=='cb_atStoreLim' ||  radio.db=='cb_atDoorLim'||
+      radio.db=='cb_minTotalForDelivery' || radio.db=='etaRange.delivery' ||  radio.db=='etaRange.pickup'
+       || radio.db=='storeHours_json.zone' || radio.db=='delFee'"> 
+      <span  *ngIf = "radio.type === 'text'">
+         <h4 class = "title"><span [ngStyle] = "{color : showBtn===i ? '#dc143c' : '#000000' }"> {{radio.item}} </span>
+            <span *ngIf = "!isEdit" (click) = "onEdit(i)" class = "title edit-text"><i>edit</i></span></h4>
+         <input
+         style="width: 95%;"
+         [readonly]="showBtn!==i"
+         [(ngModel)] = "radio.response"
+         type = "text"
+         class = "form-control"
+         >
+       </span>
+       <div  *ngIf = "showBtn===i" class ="wrapper" style ="padding:  7px;">
+       <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i"  style = "padding: 5px;">
+         <button class="btn "   (click) = "editItem(radio)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold;"> Update</button>  
+       </div>
+       <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i" style = "padding: 5px;"> 
+       <button class="btn"   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold;"> Cancel </button>  
+       </div>
+     </div></div>
+    </span>
+  </div>
+ 
+ <div class="col-sm-6" style="display: inline-block;" *ngFor = "let zone of data.data.zoneDeliveryFee.response; index as k;trackBy:trackByFn">
+  <h4 class = "title"><span [ngStyle] = "{color : showBtnZone===k ? '#dc143c' : '#000000' }"> {{data.data.zoneDeliveryFee.item}}-{{k+1}} </span>
+    <span *ngIf = "!isEdit" (click) = "onEditZone(k)" class = "title edit-text"><i>edit</i></span></h4>
+    <input
+    style="width: 95%;"
+    [readonly]="showBtnZone!==k"
+    [(ngModel)] = "data.data.zoneDeliveryFee.response[k]"
+    type = "text"
+    class = "form-control"
+   >
+   <div  *ngIf = "showBtnZone===k" class ="wrapper" style ="padding:  7px;">
+      <div [attr.id]="'undoBtn'+k" *ngIf="showBtnZone===k"  style = "padding: 5px;">
+        <button class="btn "   (click) = "editItem(data.data.zoneDeliveryFee)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold;"> Update</button>  
+      </div>
+      <div [attr.id]="'undoBtn'+k" *ngIf="showBtnZone===k" style = "padding: 5px;"> 
+      <button class="btn "   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold"> Cancel </button>  
+      </div>
+    </div>
+
+</div>
+<div class="col-sm-6 mT10"  *ngFor = "let radio of data.data.radioArr; index as i" style = "padding-bottom: 10px;display: inline-block;">
+  <span *ngIf = "radio.type === 'radio' && (radio.db=='isPayAtStore'||radio.db=='isPayAtDoor'||radio.db=='isPayOnline'||radio.db=='isShowTipState')">
+  <h4 class = "title"><span [ngStyle] = "{color : showBtnCol3===i ? '#dc143c' : '#000000' }"> {{radio.item}} </span> <span *ngIf = "!isEdit" (click) = "onEdit_col3(i)" class = "title edit-text"><i>edit</i></span></h4>
+  <mat-radio-group>
+    <mat-radio-button [disabled] = "showBtnCol3!==i" (click)="radio.response ='YES'" [checked]="radio.response =='YES'" style = "padding-right: 40px;" value = "1" > YES </mat-radio-button>
+    <mat-radio-button [disabled] = "showBtnCol3!==i" (click)="radio.response ='NO'" [checked]="radio.response =='NO'" value = "2" > NO </mat-radio-button>
+  </mat-radio-group>
+</span>
+  <div  *ngIf = "showBtnCol3===i" class ="wrapper" style ="padding:  7px; justify-content: flex-start;">
+  <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol3===i"  style = "padding: 5px;">
+    <button class="btn "   (click) = "editItem(radio)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold"> Update</button>  
+  </div>
+  <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol3===i" style = "padding: 5px;"> 
+  <button class="btn "   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold"> Cancel </button>  
+  </div>
+</div>
+</div>
+  
+</div>
+<div *ngIf="data.testStore">
+  <div *ngIf = "!isIpCheck && !isStorePaused && !isDeliveryPaused" class="flex-container flx" style = "margin-bottom: 12px;justify-content: center;">        
+    <div  *ngFor = "let test of testBtn; index as i" class = "box title testCase " (click) = "onTestCase(test.item)"><span *ngIf="test.item != loadingText">{{test.item}}</span>
+      <div *ngIf="test.item == loadingText" class=""><img width="35%" src="assets/img/loder.gif"></div></div>
+  </div>
+  <div *ngIf = "isIpCheck">
+  
+    <h4 class = "title mT20" style = "text-align: center; font-weight: bold; font-size: 16px;">{{testData.ip}} - {{testData.res}} </h4>
+  </div>
+  <div *ngIf = "isStorePaused">
+  
+    <h4 class = "title mT20" style = "text-align: center; font-weight: bold; font-size: 16px;">{{testData.res}} </h4>
+  </div>
+  <div *ngIf = "isDeliveryPaused">
+  
+    <h4 class = "title mT20" style = "text-align: center; font-weight: bold; font-size: 16px;">{{testData.res}} </h4>
+  </div>
+ 
+
+</div>
+<div *ngIf="data.refund">
+  <div *ngIf = "loading" class="flex-container text-center" style="display: block;">
+    <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+  </div>
+  <form *ngIf="!loading"  #f = "ngForm">   
+    <div class="clearfix"></div>
+    <div class="col-sm-12 text-center">
+      <div
+      style="    text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+      padding-top: 1px;
+      margin-top: 13px;
+      position: absolute;"
+       class="w20">
+        Prepaid Orders
+      </div>
+    <mat-form-field class=w20>
+        <input 
+          matInput 
+          autocomplete="off" 
+          [matDatepicker]="fromPicker" 
+          placeholder="From"
+          value
+          [max]="maxDate"
+          [min]="minDate"
+          [(ngModel)] = "fromDate"
+          name = "fromDate"
+          #name = "ngModel"
+          >
+        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromPicker></mat-datepicker>
+      </mat-form-field>
+      &nbsp;&nbsp;
+      <mat-form-field class="w20">
+          <input 
+            matInput 
+            autocomplete="off" 
+            [matDatepicker]="toPicker" 
+            placeholder="To"
+            value
+            [max]="maxDate"
+            [min]="minDate"
+            [(ngModel)] = "toDate"
+            name = "toDate"
+            #name = "ngModel"
+            >
+          <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+    &nbsp;&nbsp;
+        <button 
+        mat-raised-button 
+        class="black-bg white-c mL20 mB20"
+        type = "submit"
+        (click)="search()"
+         > Search </button> 
+      </div>
+      
+      <div class="clearfix"></div>
+      
+      <table *ngIf="displayData.length>0" id = "DataTable" class="table table-bordered">
+        <thead>
+          <tr class = "head-row"> 
+            <th  *ngFor="let row of  displayedColumnstxtOrdr" class = "head-row bold text-center" style="text-transform: uppercase;" scope="col">{{row.name}}
+              <span  *ngIf="row.sort==true">
+                <i title="Sort in Ascending Order" *ngIf="order=='DSC'" class="fa fRight f-20 fa-caret-up  " aria-hidden="true"></i>
+                <i title="Sort in Descending Order"  *ngIf="order=='ASC'" class="fa fRight f-20 fa-caret-down" aria-hidden="true"></i>
+                </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+         
+          <tr
+           class = "table-row text-center"
+           *ngFor = "let order of displayData; index as i"
+           (click) = "openRefund(order)"
+           [ngStyle]="{'background-color': !order.isPaid ? '' : 'green' ,'color': !order.isPaid ? '' : 'white' ,'display':order.isPaid ?'':'none' }"
+           class="{{order.isRefund?'grey grey-c click-none':''}}"
+           >
+            <td class = "head-row" scope="row">{{i+1}}</td>
+            <td class = "head-row">{{order.ticketId}}</td>
+            <td class = "head-row" >{{order.orderDate}}</td>
+            <td class = "head-row">{{order.orderTime}}</td>
+            <td class = "head-row">{{order.method.toUpperCase()}}</td>
+            <td class = "head-row">{{order.methodPayment.toUpperCase()}}</td>
+            <td class = "head-row">${{order.total}}</td>
+            <td class = "head-row">${{order.priceAdjust}}</td>
+            <td class = "head-row"><span *ngIf="order.isProOrder">PRO</span><span *ngIf="!order.isProOrder">TXT</span></td>
+            <td class = "head-row">{{order.orderId}}</td>
+          </tr>     
+          
+        </tbody>
+      </table>
+      <div *ngIf="errorTextFlag" class="alert alert-danger w40 text-center" style="margin: auto;" role="alert">
+        {{errorText}}
+       </div>
+    </form>
+</div>
+
+ 
+</mat-dialog-content>
+<div class="text-center">
+<mat-dialog-actions class = "close-btn" style="display: unset;">
+ 
+  <button mat-raised-button style="background-color:#17a2b8!important;color: white; " class='bold f-16' (click) = "close()"> Close </button>
+  <button *ngIf="data.items" mat-raised-button style="background-color:#17a2b8!important; color: white;"  class='bold f-16' (click) = "onItemsChange()" > Save </button>
+  <button *ngIf="data.modifiers" mat-raised-button style="background-color:#17a2b8!important;color: white; " class='bold f-16' (click) = "onModChange()" > Save </button>
+</mat-dialog-actions>
+</div>
+
+
+<div  class="modal" id="refund" style="height:auto;top:0%!important" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+        <!--Content-->
+        <div *ngIf="initateRefund" class="modal-content text-center">
+            <!--Header-->
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">INITIATE REFUND </h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="pT20 pB20">
+
+                    <div style="display: inline-block;"  class="flex-center">
+                        <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="refundType('FULL')" class="btn btn-info f-22">Full
+                            Refund</a><br>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="display: inline-block;"  class="flex-center">
+                        <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="refundType('PARTIAL')"
+                            class="btn btn-info pL20 pR20 f-22">Partial
+                            Refund</a><br>
+                    </div>
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto"  class="modal-footer flex-center">
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; "  class="btn btn-info">Close</a>
+                &nbsp;&nbsp;&nbsp;
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="backtoMainMenu()" class="btn btn-info">Back to Menu</a>
+            </div>
+        </div>
+        <div *ngIf="fullRefund" class="modal-content text-center">
+            <!--Header-->
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">FULL REFUND: Ticket no.  {{orderDetail.ticketId}}</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+               <!-- <div class=" pT20 pB20">
+                    <h5>Select a Reason from Below Dropdown</h5>
+                    <select class="form-control w70 margin-auto" id="reason" required>
+                        <option selected="selected" value="Customer was overcharged">Customer was overcharged
+                        </option>
+                        <option value="Order was not complete">Order was not complete</option>
+                        <option value="Order was delayed">Order was delayed</option>
+                        <option value="Order was not received">Order was not received</option>
+                        <option value="Managers Decision">Managers Decision</option>
+                    </select>
+                </div> -->
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="submitRefundRequest('FULL')" class="btn btn-info">Submit</a>
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="refundClick()" class="btn btn-info">Back</a>
+            </div>
+        </div>
+        <div *ngIf="partialRefund" class="modal-content text-center">
+            <!--Header-->
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">PARTIAL REFUND: Ticket no.  {{orderDetail.ticketId}}</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class=" pT20 pB20">
+                    <h5>Enter the Amount that you want to refund</h5>
+                    <div class="col-auto w70 margin-auto pT20">
+                        <div class="input-group mb-2">
+                            <div *ngIf="amountValidation()==true" class="alert alert-danger col-sm-12" role="alert">
+                                Refunt Amount Can't be greater than Total Amount
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input type="number" [(ngModel)]="partialRefundAmount" class="form-control"
+                                id="inlineFormInputGroup" placeholder="Amount">
+                        </div>
+                    </div>
+                   <!-- <div class="col-auto  w70 margin-auto pT20">
+                        <div class="input-group mb-2">
+                            <select class="form-control w70 margin-auto" id="partialRefundReason" required>
+                                <option value="Order was delayed">None</option>
+                                <option selected="selected" value="Customer was overcharged">Customer was
+                                    overcharged
+                                </option>
+                                <option value="Order was not complete">Order was not complete</option>
+                                <option value="Order was delayed">Order was delayed</option>
+                                <option value="Order was not received">Order was not received</option>
+                                <option value="Managers Decision">Managers Decision</option>
+                            </select>
+
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a style="background-color:#17a2b8!important; " data-dismiss="modal" (click)="submitRefundRequest('PARTIAL')"
+                    class="btn btn-info {{partialRefundAmount==''?'disabled':''}}">Submit</a>
+                <a style="background-color:#17a2b8!important; " data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
+            </div>
+        </div>
+        <div *ngIf="refundSummary" class="modal-content text-center">
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">REFUND SUMMARY</h5>
+            </div>
+            <div class="modal-body">
+              <div *ngIf = "finalLoading" class="flex-container text-center" style="display: block;">
+                <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+              </div>
+                <div *ngIf="!finalLoading" class="pT20 pB20">
+                  <div class=""> <span class="f-20  button">Send SMS to Customer</span> <ui-switch size="large" [(ngModel)]="smsSwitch"></ui-switch></div>
+                    <h5>Refund Type: {{type}} </h5>
+                    <h5 *ngIf="singleItemRefund">Refund Item: {{item}}</h5>
+                    <h5>Refund Amount: ${{amount}} </h5>
+                   <!-- <h5>Refund Reason: {{reasonrefund}}</h5>-->
+                    <br>
+                    <div *ngIf="pinAttempt >0 && pinAttempt <= 3" class="alert alert-danger" role="alert">
+                        Wrong Pin. Attempts {{this.pinAttempt}} of 3.
+                    </div>
+                    <div *ngIf="pinAttempt >3" class="alert alert-danger" role="alert">
+                        You have entered Wrong Pin 3 times. Call (415) 903-4020 for support.
+                    </div>
+                    <strong>
+                        <h5 class="bold f-23">Enter Your Store PIN (4-Digit):</h5>
+                    </strong>
+                    <div class="col-auto w70 pT20 margin-auto">
+                        <div class="input-group mb-2">
+                          <input style="height:45px" appAutoFocus maxlength="4" onKeyPress="if(this.value.length==4) return false;" type="tel" [(ngModel)]="storePIN"
+                          class="form-control" id="storepinn" placeholder="PIN">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:auto" class="modal-footer flex-center">
+                <a  style="background-color:#17a2b8!important; " (click)="finalRefund()" class="btn btn-info {{storePinString(storePIN).length==4?'':'disabled'}}">Process Refund</a>
+                <a style="background-color:#17a2b8!important; " data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="modal" id="changedollar" style="height:auto;top:0%!important" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+        <!--Content-->
+        <div *ngIf="changeDollarValue" class="modal-content text-center">
+            <!--Header-->
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">CHANGE DOLLAR VALUE</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="pT20 pB20">
+
+                    <div style="display: inline-block;"  class="flex-center">
+                        <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="charge()" class="btn btn-info f-22">
+                          ADD TIP OR DELIVERY</a><br>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="display: inline-block;"  class="flex-center">
+                        <a data-dismiss="modal" style="background-color:#17a2b8!important;width: 200px; " (click)="refun()"
+                            class="btn btn-info pL20 pR20 f-22">
+                            REFUND</a><br>
+                    </div>
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto"  class="modal-footer flex-center">
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; "  class="btn btn-info">Close</a>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+<div  class="modal" id="upcharge" style="height:auto;top:0%!important" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+        <!--Content-->
+        <div *ngIf="upcharge" class="modal-content text-center">
+            <!--Header-->
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">CHARGE CUSTOMER</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="pT20 pB20">
+
+                  <div *ngIf="chargecustomerSuccess" class="alert alert-success" role="alert">
+                    {{chargecustomesuccesMsg}}
+                   </div>
+                   <div *ngIf="chargeCustomerFailure" class="alert alert-danger" role="alert">
+                     {{chargeCustomeFailureMsg}}
+                   </div>
+                 <mat-form-field style="width: 41%" class="full-width form-field-txt pB0">
+                    <mat-select
+                      [formControl]="users"
+                      aria-placeholder="Select Reason"
+                      placeholder="Select Reason"
+                      multiple
+                      (ngModelChange)='chargechanged($event)'
+                  
+                    >
+                      <mat-option  *ngFor="let items of chargeCustomer" [value]="items.value">{{
+                        items.name
+                      }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                
+                 <div *ngIf="tip" class="input-group-prepend w35 margin-auto mB30">
+                    
+                     <input type="text" [(ngModel)]="tipValue" class=" f-18 form-control"
+                     id="inlineFormInputGroup" placeholder="Tip Amount">
+                 </div>
+                 <div *ngIf="delivery" class="input-group-prepend w35 margin-auto mB30">
+                    
+                    <input type="text" [(ngModel)]="deliveryValue" class=" f-18 form-control"
+                    id="inlineFormInputGroup" placeholder="Delivery Amount">
+                </div>
+                <!--<div *ngIf="fooditems" class="input-group-prepend w35 margin-auto mB30">
+                    
+                    <input type="text" [(ngModel)]="fooditemsValue" class=" f-18 form-control"
+                    id="inlineFormInputGroup" placeholder="Food Items Amount">
+                </div>-->
+                 <div class="clearfix"></div>
+                 <span class="">
+                     <a  (click)="chargeFinal()"
+                         class="btn btn-info pL20 pR20 f-15">Charge</a>
+                 </span>&nbsp;&nbsp;
+                 <span class="">
+                     <a data-dismiss="modal" (click)="backtoMainMenu()"
+                         class="btn btn-info pL20 pR20 f-15">
+                         Back</a><br>
+                 </span>
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto"  class="modal-footer flex-center">
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; "  class="btn btn-info">Close</a>
+            </div>
+        </div>
+      
+    </div>
+</div>

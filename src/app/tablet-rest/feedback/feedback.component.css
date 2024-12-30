@@ -1,0 +1,50 @@
+.bR20{
+    border-radius: 20px;
+}
+.ticketborder{
+    border: 3px dotted;
+    width: 50px;
+}
+.f-25{
+   font-size: 2vw!important; 
+}
+.review{
+    color: black;
+    font-size: 17px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 8px;
+    /* font-family: cursive; */
+    /* font-weight: normal; */
+    font-weight: bold;
+}
+.f-20{
+   font-size: 1.5vw!important;
+}
+.f-30{
+    font-size: 2.2vw!important;
+}
+.grey-c{
+   color: grey!important;
+}
+.grey-bg{
+    background: darkgrey;
+}
+.red-border {
+    border: 3px solid red;
+}
+.black-border{
+    border: 2px solid black;;
+}
+.black-back{
+    background-color: firebrick;
+    color:white;
+}
+.mT7{
+    margin-top: 7px;
+}
+.gold{
+    color: goldenrod;
+}

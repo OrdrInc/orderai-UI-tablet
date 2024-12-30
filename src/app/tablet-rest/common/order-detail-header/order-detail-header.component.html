@@ -1,0 +1,21 @@
+<h4 class="pT10">
+  <div *ngIf="orderDetail.orderStatus.refundStatus==false">
+    <button *ngIf="orderDetail.orderStatus.isPaid==true" long-press [timeout]="250" (onLongPress)="refundClick()"
+      (click)="refundClick()" class="btn fRight gold f-17 wlSpace " data-toggle="modal" data-target="#refund">
+      Refund
+    </button>
+  </div>
+  <strong class="f-25 bold wlSpace pad-10">{{orderDetail.customer.name}}:
+    {{orderDetail.customer.id}}</strong><br>
+  <span class="f-20 bold wlSpace pad-10">Order Count:
+    {{orderDetail.customer.orderCount}}</span>
+</h4>
+<h4 class="mT20">
+  <span class="col-sm-12 card text-center pT20 pB20 pL20">
+    <strong class="text-upper">{{orderDetail.method.type}}
+    </strong>
+    <hr *ngIf="orderDetail.method.type=='delivery'">
+    <span *ngIf="orderDetail.method.type=='delivery'" class="">
+      {{orderDetail.method.address}} </span>
+  </span>
+</h4>

@@ -1,0 +1,82 @@
+{
+    "method": {
+        "type": "pickup",
+        "address": "#111 Warren Rd, arizona, AR 48185"
+    },
+    "customer": {
+        "msg": {
+            "text": "1 pizza",
+            "type": "order"
+        },
+        "cardType": " ",
+        "orderId": "ABCD123",
+        "timeStamp": "12:50 pm",
+        "id": "+14695096822",
+        "custCode": "CA36",
+        "name": "Karthi"
+    },
+    "restaurant": {
+        "TNumber": "101",
+        "date": "04-05-2019",
+        "restCode": "SWM",
+        "address": "35298 Warren Rd, Westland, MI 48185",
+        "name": "Sammy's Pizza",
+        "rid": "+17344159690",
+        "tNum": "1-1-1-1 T106"
+    },
+    "items": [
+        {
+            "item": {
+                "Crust": "Round",
+                "disp_name": "*",
+                "modifiersList": [
+                    "Cheese"
+                ],
+                "First_Half": " Pepperoni, Bacon, Ham, Grilled chicken",
+                "price": "$16.27",
+                "cat_name": "pizza",
+                "Size": "Large",
+                "Toppings": "Cheese",
+                "name": "PIZZA",
+                "Second_Half": " Pineapple",
+                "quantity": "1"
+            }
+        },
+        {
+            "item": {
+                "disp_name": "*",
+                "modifiersList": [],
+                "price": "$8.00",
+                "cat_name": "salad",
+                "name": "GARDEN-SALAD",
+                "Size": "Large",
+                "quantity": "1"
+            }
+        },
+        {
+            "item": {
+                "disp_name": "*",
+                "modifiersList": [],
+                "price": "$1.79",
+                "cat_name": "drinks",
+                "name": "PEPSI",
+                "Size": "20 oz",
+                "quantity": "1"
+            }
+        }
+    ],
+    "paidDollarValue": {
+        "paidTip": "0.00",
+        "paidTotalwoTip": "20.71",
+        "paidSubTotal": "19.54",
+        "paidTotal": "20.71",
+        "paidTax": "1.17",
+        "paidSavings": "6.51",
+        "paidCouponName": "TXT25%OFF"
+    },
+    "orderStatus": {
+        "ETA": "TBD",
+        "isPaid": "false",
+        "paymentMethod": "card"
+    }
+}
